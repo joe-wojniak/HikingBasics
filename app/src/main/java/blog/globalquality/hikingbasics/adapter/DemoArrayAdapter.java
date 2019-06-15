@@ -23,10 +23,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
-import com.examples.youtubeapidemo.R;
-
 import java.util.List;
+
+import blog.globalquality.hikingbasics.R;
 
 /**
  * A convenience class to make ListViews easier to use in the demo activities.

@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "722611701406",
-    "firebase_url": "https://hiking-basics.firebaseio.com",
-    "project_id": "hiking-basics",
-    "storage_bucket": "hiking-basics.appspot.com"
+    "project_number": "696761026165",
+    "firebase_url": "https://hikingbasics.firebaseio.com",
+    "project_id": "hikingbasics",
+    "storage_bucket": "hikingbasics.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:722611701406:android:dcb655d040763efc",
+        "mobilesdk_app_id": "1:696761026165:android:dcb655d040763efc",
         "android_client_info": {
           "package_name": "blog.globalquality.hikingbasics"
         }
       },
       "oauth_client": [
         {
-          "client_id": "722611701406-1qnkv6hcu4ckgdg26st56375te3un89o.apps.googleusercontent.com",
+          "client_id": "696761026165-vsi2c4at8hqni1j8bgilq6tomeh26fog.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "blog.globalquality.hikingbasics",
@@ -23,20 +23,20 @@
           }
         },
         {
-          "client_id": "722611701406-saicjrua5hhg9j2d7hsn8668sl0dvkuh.apps.googleusercontent.com",
+          "client_id": "696761026165-ul49b76doh1rbsqajrsgllvek8qob6ta.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCFRS8P6eGn7cazpPob58UWEJg5CYf-kB4"
+          "current_key": "AIzaSyBGi6Z1qCfGRUjba_Q1Prg1JvMR9eyG818"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "722611701406-saicjrua5hhg9j2d7hsn8668sl0dvkuh.apps.googleusercontent.com",
+              "client_id": "696761026165-ul49b76doh1rbsqajrsgllvek8qob6ta.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
