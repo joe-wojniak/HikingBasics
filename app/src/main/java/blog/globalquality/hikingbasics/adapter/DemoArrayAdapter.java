@@ -45,9 +45,9 @@ public final class DemoArrayAdapter extends ArrayAdapter<DemoListViewItem> {
       view = inflater.inflate(R.layout.list_item, null);
     }
 
-    TextView textView = (TextView) view.findViewById(R.id.list_item_text);
+    TextView textView = view.findViewById(R.id.list_item_text);
     textView.setText(getItem(position).getTitle());
-    TextView disabledText = (TextView) view.findViewById(R.id.list_item_disabled_text);
+    TextView disabledText = view.findViewById(R.id.list_item_disabled_text);
     disabledText.setText(getItem(position).getDisabledText());
 
     if (isEnabled(position)) {
