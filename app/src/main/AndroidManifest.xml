@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
-    package="com.android.example.hikingbasics">
+    package="blog.globalquality.hikingbasics">
 
     <dist:module dist:instant="true" />
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -22,6 +24,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:label="@string/fragment_demo_name"
+            android:name=".FragmentDemoActivity"
+            android:screenOrientation="nosensor"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+            <meta-data android:name="@string/minVersion" android:value="11"/>
+            <meta-data android:name="@string/isLaunchableActivity" android:value="true"/>
+        </activity>
+
+        <activity
+            android:label="@string/videowall_demo_name"
+            android:name=".VideoWallDemoActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/BlackNoBarsTheme"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+            <meta-data android:name="@string/minVersion" android:value="11"/>
+            <meta-data android:name="@string/isLaunchableActivity" android:value="true"/>
+        </activity>
+
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

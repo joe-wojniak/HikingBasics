@@ -1,4 +1,4 @@
-package com.android.example.hikingbasics;
+package blog.globalquality.hikingbasics;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.android.example.hikingbasics", appContext.getPackageName());
+        assertEquals("blog.globalquality.hikingbasics", appContext.getPackageName());
     }
 }

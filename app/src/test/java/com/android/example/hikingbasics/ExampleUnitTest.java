@@ -1,4 +1,4 @@
-package com.android.example.hikingbasics;
+package blog.globalquality.hikingbasics;
 
 import org.junit.Test;
 
