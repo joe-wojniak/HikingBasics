@@ -76,40 +76,44 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        // Handle navigation view item clicks.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        /* Stackoverflow code snippet used-
+           https://stackoverflow.com/a/36463784/8811523
+        */
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_tools) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        } else if (id == R.id.nav_intro) {
-            /* Stackoverflow code snippet answer
-            https://stackoverflow.com/a/36463784/8811523
-             */
-            Intent i = new Intent(MainActivity.this, FragmentDemoActivity.class);
-            startActivity(i);
-        } else if (id == R.id.nav_avalanche) {
-
-        } else if (id == R.id.nav_10Essentials) {
-
-        } else if (id == R.id.nav_Navigation) {
-
-        } else if (id == R.id.nav_LNT) {
-
-        } else if (id == R.id.nav_YouTubeWall) {
-
+        switch (id) {
+            case R.id.nav_home:
+                break;
+            case R.id.nav_intro:
+                Intent i = new Intent(MainActivity.this, FragmentDemoActivity.class);
+                startActivity(i);
+                break;
+            case R.id.nav_avalanche:
+                i = new Intent(MainActivity.this, FragmentDemoActivity.class);
+                startActivity(i);
+                break;
+            case R.id.nav_10Essentials:
+                i = new Intent(MainActivity.this, FragmentDemoActivity.class);
+                startActivity(i);
+                break;
+            case R.id.nav_Navigation:
+                i = new Intent(MainActivity.this, FragmentDemoActivity.class);
+                startActivity(i);
+                break;
+            case R.id.nav_LNT:
+                i = new Intent(MainActivity.this, FragmentDemoActivity.class);
+                startActivity(i);
+                break;
+            case R.id.nav_YouTubeWall:
+                i = new Intent(MainActivity.this, VideoWallDemoActivity.class);
+                startActivity(i);
+                break;
+            default:
+                break;
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

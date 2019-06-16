@@ -45,4 +45,39 @@
     <string name="error_thumbnail_view">There was an error initializing the YouTubeThumbnailView (%1$s)</string>
     <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
 
+    <!-- Fragment Titles -->
+    <string name="titleAvalanche">Avalanche</string>
+    <string name="titleTenEssentials">The 10 Essentials</string>
+    <string name="titleNavigation">Navigation</string>
+    <string name="titleLNT">Leave No Trace</string>
+
+    <!-- Fragment Questions and Answers -->
+    <string name="avalancheQ1">Placeholder</string>
+    <string name="avalancheQ2">Placeholder</string>
+    <string name="avalancheQ3">Placeholder</string>
+    <string name="avalancheQ4">Placeholder</string>
+    <string name="avalancheQ5">Placeholder</string>
+
+    <string name="tenEssentialsQ1">Placeholder</string>
+    <string name="tenEssentialsQ2">Placeholder</string>
+    <string name="tenEssentialsQ3">Placeholder</string>
+    <string name="tenEssentialsQ4">Placeholder</string>
+    <string name="tenEssentialsQ5">Placeholder</string>
+
+    <string name="navigationQ1">Placeholder</string>
+    <string name="navigationQ2">Placeholder</string>
+    <string name="navigationQ3">Placeholder</string>
+    <string name="navigationQ4">Placeholder</string>
+    <string name="navigationQ5">Placeholder</string>
+
+    <string name="leaveNoTraceQ1">Placeholder</string>
+    <string name="leaveNoTraceQ2">Placeholder</string>
+    <string name="leaveNoTraceQ3">Placeholder</string>
+    <string name="leaveNoTraceQ4">Placeholder</string>
+    <string name="leaveNoTraceQ5">Placeholder</string>
+
+    <string name="hint">Type your answer here</string>
+
+    <string name="button_close">Close</string>
+
 </resources>
