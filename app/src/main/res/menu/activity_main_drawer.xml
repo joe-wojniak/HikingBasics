@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_gallery"
@@ -20,6 +20,31 @@
             android:id="@+id/nav_tools"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/menu_tools" />
+        <item
+            android:id="@+id/nav_intro"
+            android:icon="@drawable/ic_face_black_24dp"
+            android:title="@string/menu_intro" />
+        <item
+            android:id="@+id/nav_avalanche"
+            android:icon="@drawable/ic_ac_unit_black_24dp"
+            android:title="@string/menu_avalanche" />
+        <item
+            android:id="@+id/nav_10Essentials"
+            android:icon="@drawable/ic_format_list_numbered_black_24dp"
+            android:title="@string/menu_10Essentials" />
+        <item
+            android:id="@+id/nav_Navigation"
+            android:icon="@drawable/ic_explore_black_24dp"
+            android:title="@string/menu_Navigation" />
+        <item
+            android:id="@+id/nav_LNT"
+            android:icon="@drawable/ic_pets_black_24dp"
+            android:title="@string/menu_LNT" />
+        <item
+            android:id="@+id/nav_YouTubeWall"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_YouTube" />
+
     </group>
 
     <item android:title="Communicate">

@@ -1,5 +1,6 @@
 package blog.globalquality.hikingbasics;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -93,10 +94,28 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
+        } else if (id == R.id.nav_intro) {
+            /* Stackoverflow code snippet answer
+            https://stackoverflow.com/a/36463784/8811523
+             */
+            Intent i = new Intent(MainActivity.this, FragmentDemoActivity.class);
+            startActivity(i);
+        } else if (id == R.id.nav_avalanche) {
+
+        } else if (id == R.id.nav_10Essentials) {
+
+        } else if (id == R.id.nav_Navigation) {
+
+        } else if (id == R.id.nav_LNT) {
+
+        } else if (id == R.id.nav_YouTubeWall) {
+
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }
+

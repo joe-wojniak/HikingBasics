@@ -17,6 +17,7 @@
 package blog.globalquality.hikingbasics;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -54,6 +55,10 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
   @Override
   protected YouTubePlayer.Provider getYouTubePlayerProvider() {
     return (YouTubePlayerFragment) getFragmentManager().findFragmentById(R.id.youtube_fragment);
+  }
+
+  public void onClickClose (View view){
+    finish();
   }
 
 }

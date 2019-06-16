@@ -20,6 +20,5 @@
 
     <string name="minVersion">minVersion</string>
     <string name="isLaunchableActivity">isLaunchableActivity</string>
-    <string name="loggingTag">YoutubeAPIDemos</string>
 
 </resources>
