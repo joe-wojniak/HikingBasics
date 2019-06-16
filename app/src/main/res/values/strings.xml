@@ -78,6 +78,6 @@
 
     <string name="hint">Type your answer here</string>
 
-    <string name="button_close">Close</string>
+    <string name="button_close">Score Quiz</string>
 
 </resources>

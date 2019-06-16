@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Copyright 2012 Google Inc. All Rights Reserved.
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,25 +13,151 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-  <TextView
-      android:layout_width="0dp"
-      android:layout_height="match_parent"
-      android:layout_weight="1"
-      android:textAppearance="@android:style/TextAppearance.Small"
-      android:gravity="center"
-      android:text="@string/playerfragment_text"/>
+    <TextView
+        android:id="@+id/fragmentTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/titleAvalanche"
+        android:textAllCaps="true"
+        android:textStyle="bold" />
 
-  <fragment
-      android:name="com.google.android.youtube.player.YouTubePlayerFragment"
-      android:id="@+id/youtube_fragment"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_weight="1"
-      android:layout_gravity="center_vertical"/>
+    <fragment
+        android:id="@+id/youtube_fragment"
+        android:name="com.google.android.youtube.player.YouTubePlayerFragment"
+        android:layout_width="327dp"
+        android:layout_height="197dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:minHeight="@dimen/layoutSize"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/scrollView2"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="232dp"
+        android:layout_height="356dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentTitle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/fragmentQ1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/avalancheQ1" />
+
+            <EditText
+                android:id="@+id/fragmentA1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="@string/hint"
+                android:hint="@string/hint"
+                android:inputType="text"
+                android:paddingTop="@dimen/paddingTop"
+                tools:targetApi="o" />
+
+            <TextView
+                android:id="@+id/fragmentQ2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/paddingTop"
+                android:text="@string/avalancheQ2" />
+
+            <EditText
+                android:id="@+id/fragmentA2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="@string/hint"
+                android:hint="@string/hint"
+                android:inputType="text"
+                android:paddingTop="@dimen/paddingTop"
+                tools:targetApi="o" />
+
+            <TextView
+                android:id="@+id/fragmentQ3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/paddingTop"
+                android:text="@string/avalancheQ3" />
+
+            <EditText
+                android:id="@+id/fragmentA3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="@string/hint"
+                android:hint="@string/hint"
+                android:inputType="text"
+                android:paddingTop="@dimen/paddingTop"
+                tools:targetApi="o" />
+
+            <TextView
+                android:id="@+id/fragmentQ4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/paddingTop"
+                android:text="@string/avalancheQ4" />
+
+            <EditText
+                android:id="@+id/fragmentA4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="@string/hint"
+                android:hint="@string/hint"
+                android:inputType="text"
+                android:paddingTop="@dimen/paddingTop"
+                tools:targetApi="o" />
+
+            <TextView
+                android:id="@+id/fragmentQ5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/paddingTop"
+                android:text="@string/avalancheQ5" />
+
+            <EditText
+                android:id="@+id/fragmentA5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="@string/hint"
+                android:hint="@string/hint"
+                android:inputType="text"
+                android:paddingTop="@dimen/paddingTop"
+                tools:targetApi="o" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_weight="2"
+        android:gravity="bottom"
+        android:onClick="onClickClose"
+        android:text="@string/button_close"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/scrollView2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
