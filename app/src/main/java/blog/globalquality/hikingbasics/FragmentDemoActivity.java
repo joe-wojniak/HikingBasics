@@ -33,32 +33,42 @@ import com.google.android.youtube.player.YouTubePlayerFragment;
  */
 public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    setContentView(R.layout.fragments_demo);
+        setContentView(R.layout.fragments_demo);
 
-    YouTubePlayerFragment youTubePlayerFragment =
-        (YouTubePlayerFragment) getFragmentManager().findFragmentById(R.id.youtube_fragment);
-    youTubePlayerFragment.initialize(DeveloperKey.DEVELOPER_KEY, this);
-  }
-
-  @Override
-  public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player,
-                                      boolean wasRestored) {
-    if (!wasRestored) {
-      player.cueVideo("nCgQDjiotG0");
+        YouTubePlayerFragment youTubePlayerFragment =
+                (YouTubePlayerFragment) getFragmentManager().findFragmentById(R.id.youtube_fragment);
+        youTubePlayerFragment.initialize(DeveloperKey.DEVELOPER_KEY, this);
     }
-  }
 
-  @Override
-  protected YouTubePlayer.Provider getYouTubePlayerProvider() {
-    return (YouTubePlayerFragment) getFragmentManager().findFragmentById(R.id.youtube_fragment);
-  }
+    @Override
+    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer player,
+                                        boolean wasRestored) {
+        String videoId = null; // YouTube video ID
+        int videoStart = 0;     // point at which to start the video, in milliseconds
 
-  public void onClickClose (View view){
-    finish();
-  }
+        if (!wasRestored) {
+
+            Bundle extras = getIntent().getExtras();
+            if (extras != null) {
+                videoId = extras.getString("videoId");
+                videoStart = extras.getInt("videoStart",0);
+            }
+
+            player.cueVideo(videoId, videoStart);
+        }
+    }
+
+    @Override
+    protected YouTubePlayer.Provider getYouTubePlayerProvider() {
+        return (YouTubePlayerFragment) getFragmentManager().findFragmentById(R.id.youtube_fragment);
+    }
+
+    public void onClickClose(View view) {
+        finish();
+    }
 
 }

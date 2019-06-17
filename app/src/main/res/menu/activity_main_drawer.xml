@@ -9,18 +9,6 @@
             android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
-        <item
-            android:id="@+id/nav_tools"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/menu_tools" />
-        <item
             android:id="@+id/nav_intro"
             android:icon="@drawable/ic_face_black_24dp"
             android:title="@string/menu_intro" />
@@ -44,6 +32,10 @@
             android:id="@+id/nav_YouTubeWall"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_YouTube" />
+        <item
+            android:id="@+id/nav_YouTubeBestPlaces"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_YouTubeBestPlaces" />
 
     </group>
 

@@ -35,7 +35,8 @@
     <string name="menu_10Essentials">10 Essentials</string>
     <string name="menu_Navigation">Navigation</string>
     <string name="menu_LNT">Leave No Trace</string>
-    <string name="menu_YouTube">YouTube - Best Mountains</string>
+    <string name="menu_YouTube">Steve Gladbach Videos</string>
+    <string name="menu_YouTubeBestPlaces">YouTube - Best Places</string>
 
     <string name="videowall_demo_name">Video Wall</string>
     <string name="fragment_demo_name">Simple PlayerFragment</string>

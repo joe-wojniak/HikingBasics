@@ -90,26 +90,43 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_intro:
                 Intent i = new Intent(MainActivity.this, FragmentDemoActivity.class);
+                i.putExtra("videoId","LoidFvJpZ1g");
+                i.putExtra("videoStart",5000);
                 startActivity(i);
                 break;
             case R.id.nav_avalanche:
                 i = new Intent(MainActivity.this, FragmentDemoActivity.class);
+                i.putExtra("videoId","QylgHwF3tkk");
+                i.putExtra("videoStart",12000);
+                startActivity(i);
                 startActivity(i);
                 break;
             case R.id.nav_10Essentials:
                 i = new Intent(MainActivity.this, FragmentDemoActivity.class);
+                i.putExtra("videoId","tvIH-5B576w");
+                i.putExtra("videoStart",12000);
                 startActivity(i);
                 break;
             case R.id.nav_Navigation:
                 i = new Intent(MainActivity.this, FragmentDemoActivity.class);
+                i.putExtra("videoId","Ba67vHfxqxY");
+                i.putExtra("videoStart",12000);
                 startActivity(i);
                 break;
             case R.id.nav_LNT:
                 i = new Intent(MainActivity.this, FragmentDemoActivity.class);
+                i.putExtra("videoId","wf77YuQ_1ow");
+                i.putExtra("videoStart",9000);
                 startActivity(i);
                 break;
             case R.id.nav_YouTubeWall:
                 i = new Intent(MainActivity.this, VideoWallDemoActivity.class);
+                i.putExtra("playlistID","PLm-g0Ce0XFfEyR9MEE2maV5oiZyJc1ocE");
+                startActivity(i);
+                break;
+            case R.id.nav_YouTubeBestPlaces:
+                i = new Intent(MainActivity.this, VideoWallDemoActivity.class);
+                i.putExtra("playlistID","PLm-g0Ce0XFfEp7o3VVyakIgwaZSLg8EfF");
                 startActivity(i);
                 break;
             default:

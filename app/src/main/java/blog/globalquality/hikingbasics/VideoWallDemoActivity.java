@@ -59,8 +59,11 @@ public class VideoWallDemoActivity extends Activity implements
   private static final float PLAYER_VIEW_MINIMUM_HEIGHT_DP = 110;
   private static final int MAX_NUMBER_OF_ROWS_WANTED = 4;
 
-  // Example playlist from which videos are displayed on the video wall
-  private static final String PLAYLIST_ID = "ECAE6B03CA849AD332";
+  // TODO remove comments
+  // Playlist from which videos are displayed on the video wall
+  // private static final String PLAYLIST_ID = "ECAE6B03CA849AD332";
+  private String PLAYLIST_ID;
+  // Replace with extra from intent from navigation drawer selection
 
   private static final int INTER_IMAGE_PADDING_DP = 5;
 
@@ -192,6 +195,10 @@ public class VideoWallDemoActivity extends Activity implements
   private void maybeStartDemo() {
     if (activityResumed && player != null && thumbnailLoader != null
         && state.equals(State.UNINITIALIZED)) {
+      Bundle extras = getIntent().getExtras();
+      if (extras != null){
+        PLAYLIST_ID = (String) extras.get("playlistID");
+      }
       thumbnailLoader.setPlaylist(PLAYLIST_ID); // loading the first thumbnail will kick off demo
       state = State.LOADING_THUMBNAILS;
     }
