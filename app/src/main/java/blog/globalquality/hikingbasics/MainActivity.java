@@ -14,17 +14,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.ButterKnife;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mQuizDatabaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,31 +92,35 @@ public class MainActivity extends AppCompatActivity
                 Intent i = new Intent(MainActivity.this, FragmentDemoActivity.class);
                 i.putExtra("videoId","LoidFvJpZ1g");
                 i.putExtra("videoStart",5000);
+                i.putExtra("quiz","QuizSG");
                 startActivity(i);
                 break;
             case R.id.nav_avalanche:
                 i = new Intent(MainActivity.this, FragmentDemoActivity.class);
                 i.putExtra("videoId","QylgHwF3tkk");
                 i.putExtra("videoStart",12000);
-                startActivity(i);
+                i.putExtra("quiz","QuizAv");
                 startActivity(i);
                 break;
             case R.id.nav_10Essentials:
                 i = new Intent(MainActivity.this, FragmentDemoActivity.class);
                 i.putExtra("videoId","tvIH-5B576w");
                 i.putExtra("videoStart",12000);
+                i.putExtra("quiz","QuizTenEssentials");
                 startActivity(i);
                 break;
             case R.id.nav_Navigation:
                 i = new Intent(MainActivity.this, FragmentDemoActivity.class);
                 i.putExtra("videoId","Ba67vHfxqxY");
                 i.putExtra("videoStart",12000);
+                i.putExtra("quiz","QuizNav");
                 startActivity(i);
                 break;
             case R.id.nav_LNT:
                 i = new Intent(MainActivity.this, FragmentDemoActivity.class);
                 i.putExtra("videoId","wf77YuQ_1ow");
                 i.putExtra("videoStart",9000);
+                i.putExtra("quiz","QuizLeaveNoTrace");
                 startActivity(i);
                 break;
             case R.id.nav_YouTubeWall:

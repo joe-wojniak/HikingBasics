@@ -22,6 +22,8 @@ import android.view.View;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * A simple YouTube Android API demo application which shows how to create a simple application that
@@ -33,11 +35,16 @@ import com.google.android.youtube.player.YouTubePlayerFragment;
  */
 public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
 
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mQuizDatabaseReference;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.fragments_demo);
+
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
 
         YouTubePlayerFragment youTubePlayerFragment =
                 (YouTubePlayerFragment) getFragmentManager().findFragmentById(R.id.youtube_fragment);
@@ -49,6 +56,7 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
                                         boolean wasRestored) {
         String videoId = null; // YouTube video ID
         int videoStart = 0;     // point at which to start the video, in milliseconds
+        String quiz = null; // Quiz database reference
 
         if (!wasRestored) {
 
@@ -56,9 +64,12 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
             if (extras != null) {
                 videoId = extras.getString("videoId");
                 videoStart = extras.getInt("videoStart",0);
+                quiz = extras.getString("quiz");
             }
 
             player.cueVideo(videoId, videoStart);
+            mQuizDatabaseReference = mFirebaseDatabase.getReference().child(quiz);
+            quiz();
         }
     }
 
@@ -69,6 +80,13 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
 
     public void onClickClose(View view) {
         finish();
+    }
+
+    public void quiz(){
+        // populate quiz questions
+        // check answers
+        // score quiz
+        // store score
     }
 
 }
