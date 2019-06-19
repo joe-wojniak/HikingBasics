@@ -56,7 +56,7 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
                                         boolean wasRestored) {
         String videoId = null; // YouTube video ID
         int videoStart = 0;     // point at which to start the video, in milliseconds
-        String quiz = null; // Quiz database reference
+        String quiz = null; // QuizQuestion database reference
 
         if (!wasRestored) {
 
@@ -83,6 +83,7 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
     }
 
     public void quiz(){
+        //TODO
         // populate quiz questions
         // check answers
         // score quiz

@@ -1,18 +1,17 @@
 package blog.globalquality.hikingbasics;
 
 /**
- * Quiz object for question & answer pairs from hikingBasics Firebase Project
- *
+ * QuizQuestion object for question & answer pairs from hikingBasics Firebase Project
+ * <p>
  * Firebase database quiz collections of questions and answers-
  * QuizAv - Avalanche
  * QuizLeaveNoTrace - LeaveNoTrace
  * QuizNav - Navigation
  * QuizSG - Steve Gladbach
  * QuizTenEssentials - 10 Essentials
- *
  */
 
-public class Quiz {
+public class QuizQuestion {
 
     private String quiz;        // Firebase database collection
     private String name;        // User's name - public name
@@ -26,12 +25,12 @@ public class Quiz {
     private String choice3;     // multiple choice answer #3
     private String choice4;     // multiple choice answer #4
 
-    public Quiz(){
+    public QuizQuestion() {
     }
 
-    public Quiz(String quiz, String name, Integer quizScore, String document, String response,
-                String question, String answer, String choice1, String choice2, String choice3,
-                String choice4){
+    public QuizQuestion(String quiz, String name, Integer quizScore, String document, String response,
+                        String question, String answer, String choice1, String choice2, String choice3,
+                        String choice4) {
         this.quiz = quiz;
         this.name = name;
         this.quizScore = quizScore;
@@ -46,20 +45,60 @@ public class Quiz {
     }
 
     // Getter methods
-    public String getQuiz(){return quiz;}
-    public String getName(){return name;}
-    public Integer getQuizScore(){return quizScore;}
-    public String getDocument(){return document;}
-    public String getResponse(){return response;}
-    public String getQuestion(){return question;}
-    public String getAnswer(){return answer;}
-    public String getChoice1(){return choice1;}
-    public String getChoice2(){return choice2;}
-    public String getChoice3(){return choice3;}
-    public String getChoice4(){return choice4;}
+    public String getQuiz() {
+        return quiz;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getQuizScore() {
+        return quizScore;
+    }
+
+    public String getDocument() {
+        return document;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public String getChoice1() {
+        return choice1;
+    }
+
+    public String getChoice2() {
+        return choice2;
+    }
+
+    public String getChoice3() {
+        return choice3;
+    }
+
+    public String getChoice4() {
+        return choice4;
+    }
 
     // Setter methods
     // only a User's score is updated in the database
-    public void setQuizScore(Integer quizScore){this.quizScore=quizScore;}
+    // a User's response is used locally to check against the answer
+
+    public void setQuizScore(Integer quizScore) {
+        this.quizScore = quizScore;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
 
 }
