@@ -1,7 +1,7 @@
 package blog.globalquality.hikingbasics;
 
 /**
- * QuizQuestion object for question & answer pairs from hikingBasics Firebase Project
+ * QuizQuestionAnswerScore object for question & answer pairs from hikingBasics Firebase Project
  * <p>
  * Firebase database quiz collections of questions and answers-
  * QuizAv - Avalanche
@@ -11,7 +11,7 @@ package blog.globalquality.hikingbasics;
  * QuizTenEssentials - 10 Essentials
  */
 
-public class QuizQuestion {
+public class QuizQuestionAnswerScore {
 
     private String quiz;        // Firebase database collection
     private String name;        // User's name - public name
@@ -25,12 +25,12 @@ public class QuizQuestion {
     private String choice3;     // multiple choice answer #3
     private String choice4;     // multiple choice answer #4
 
-    public QuizQuestion() {
+    public QuizQuestionAnswerScore() {
     }
 
-    public QuizQuestion(String quiz, String name, Integer quizScore, String document, String response,
-                        String question, String answer, String choice1, String choice2, String choice3,
-                        String choice4) {
+    public QuizQuestionAnswerScore(String quiz, String name, Integer quizScore, String document, String response,
+                                   String question, String answer, String choice1, String choice2, String choice3,
+                                   String choice4) {
         this.quiz = quiz;
         this.name = name;
         this.quizScore = quizScore;
@@ -90,15 +90,49 @@ public class QuizQuestion {
     }
 
     // Setter methods
-    // only a User's score is updated in the database
-    // a User's response is used locally to check against the answer
+
+    public void setQuiz(String quiz) {
+        this.quiz = quiz;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public void setQuizScore(Integer quizScore) {
         this.quizScore = quizScore;
     }
 
+    public void setDocument(String document) {
+        this.document = document;
+    }
+
     public void setResponse(String response) {
         this.response = response;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public void setChoice1(String choice1) {
+        this.choice1 = choice1;
+    }
+
+    public void setChoice2(String choice2) {
+        this.choice2 = choice2;
+    }
+
+    public void setChoice3(String choice3) {
+        this.choice3 = choice3;
+    }
+
+    public void setChoice4(String choice4) {
+        this.choice4 = choice4;
     }
 
 }

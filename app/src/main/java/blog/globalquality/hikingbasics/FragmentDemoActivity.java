@@ -35,8 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
 
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mQuizDatabaseReference;
+    private DatabaseReference mDatabase;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +43,7 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
 
         setContentView(R.layout.fragments_demo);
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         YouTubePlayerFragment youTubePlayerFragment =
                 (YouTubePlayerFragment) getFragmentManager().findFragmentById(R.id.youtube_fragment);
@@ -56,7 +55,7 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
                                         boolean wasRestored) {
         String videoId = null; // YouTube video ID
         int videoStart = 0;     // point at which to start the video, in milliseconds
-        String quiz = null; // QuizQuestion database reference
+        String quiz = null; // QuizQuestionAnswerScore database reference
 
         if (!wasRestored) {
 
@@ -68,7 +67,6 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
             }
 
             player.cueVideo(videoId, videoStart);
-            mQuizDatabaseReference = mFirebaseDatabase.getReference().child(quiz);
             quiz();
         }
     }
