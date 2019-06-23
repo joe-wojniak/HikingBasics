@@ -1,12 +1,12 @@
 /**
  * Copyright 2016 Google Inc. All Rights Reserved.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,6 +31,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
 import blog.globalquality.hikingbasics.MainActivity;
 import blog.globalquality.hikingbasics.R;
 
@@ -67,6 +68,7 @@ public class EmailPasswordActivity extends MainActivity implements
 
         // [START initialize_auth]
         // Initialize Firebase Auth
+        // TODO Move to a background thread
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
     }
@@ -77,7 +79,9 @@ public class EmailPasswordActivity extends MainActivity implements
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
         updateUI(currentUser);
+
     }
     // [END on_start_check_user]
 
@@ -86,8 +90,6 @@ public class EmailPasswordActivity extends MainActivity implements
         if (!validateForm()) {
             return;
         }
-
-        showProgressDialog();
 
         // [START create_user_with_email]
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -107,9 +109,6 @@ public class EmailPasswordActivity extends MainActivity implements
                             updateUI(null);
                         }
 
-                        // [START_EXCLUDE]
-                        hideProgressDialog();
-                        // [END_EXCLUDE]
                     }
                 });
         // [END create_user_with_email]
@@ -120,8 +119,6 @@ public class EmailPasswordActivity extends MainActivity implements
         if (!validateForm()) {
             return;
         }
-
-        showProgressDialog();
 
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
@@ -145,7 +142,6 @@ public class EmailPasswordActivity extends MainActivity implements
                         if (!task.isSuccessful()) {
                             mStatusTextView.setText(R.string.auth_failed);
                         }
-                        hideProgressDialog();
                         // [END_EXCLUDE]
                     }
                 });
@@ -211,7 +207,6 @@ public class EmailPasswordActivity extends MainActivity implements
     }
 
     private void updateUI(FirebaseUser user) {
-        hideProgressDialog();
         if (user != null) {
             mStatusTextView.setText(getString(R.string.emailpassword_status_fmt,
                     user.getEmail(), user.isEmailVerified()));

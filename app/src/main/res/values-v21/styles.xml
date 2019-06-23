@@ -1,14 +1,16 @@
 <resources>
 
+<!--
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+-->
 
-    <style name="BlackNoBarsTheme" parent="android:Theme.Holo.NoActionBar.Fullscreen">
+    <style name="BlackNoBarsTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@android:color/black</item>
         <item name="android:colorBackground">@android:color/black</item>
-    </style>
+    </style> -->
 
 </resources>

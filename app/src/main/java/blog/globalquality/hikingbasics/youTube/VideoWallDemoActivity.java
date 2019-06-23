@@ -17,7 +17,6 @@
 package blog.globalquality.hikingbasics.youTube;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,6 +36,7 @@ import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 
+import blog.globalquality.hikingbasics.MainActivity;
 import blog.globalquality.hikingbasics.R;
 import blog.globalquality.hikingbasics.ui.FlippingView;
 import blog.globalquality.hikingbasics.ui.ImageWallView;
@@ -49,7 +49,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
  * a playing YouTube video.
  */
 @TargetApi(11)
-public class VideoWallDemoActivity extends Activity implements
+public class VideoWallDemoActivity extends MainActivity implements
     FlippingView.Listener,
     YouTubePlayer.OnInitializedListener,
     YouTubeThumbnailView.OnInitializedListener {
