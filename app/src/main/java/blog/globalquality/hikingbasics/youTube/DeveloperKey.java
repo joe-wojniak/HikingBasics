@@ -1,6 +1,6 @@
 // Copyright 2014 Google Inc. All Rights Reserved.
 
-package blog.globalquality.hikingbasics;
+package blog.globalquality.hikingbasics.youTube;
 
 import static blog.globalquality.hikingbasics.BuildConfig.YouTubeKey;
 

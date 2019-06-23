@@ -1,4 +1,4 @@
-package blog.globalquality.hikingbasics;
+package blog.globalquality.hikingbasics.quiz;
 
 /**
  * QuizQuestionAnswerScore object for question & answer pairs from hikingBasics Firebase Project

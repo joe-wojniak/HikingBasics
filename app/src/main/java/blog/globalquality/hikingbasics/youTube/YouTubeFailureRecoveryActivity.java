@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package blog.globalquality.hikingbasics;
+package blog.globalquality.hikingbasics.youTube;
 
 import android.content.Intent;
 import android.widget.Toast;
@@ -22,6 +22,8 @@ import android.widget.Toast;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
+
+import blog.globalquality.hikingbasics.R;
 
 /**
  * An abstract activity which deals with recovering from errors which may occur during API

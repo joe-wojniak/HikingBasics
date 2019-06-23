@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package blog.globalquality.hikingbasics;
+package blog.globalquality.hikingbasics.youTube;
 
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +24,8 @@ import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import blog.globalquality.hikingbasics.R;
 
 /**
  * A simple YouTube Android API demo application which shows how to create a simple application that
