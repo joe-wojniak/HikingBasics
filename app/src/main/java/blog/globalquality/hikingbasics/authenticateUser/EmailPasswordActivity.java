@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,10 +33,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import blog.globalquality.hikingbasics.MainActivity;
 import blog.globalquality.hikingbasics.R;
 
-public class EmailPasswordActivity extends MainActivity implements
+public class EmailPasswordActivity extends AppCompatActivity implements
         View.OnClickListener {
 
     private static final String TAG = "EmailPassword";
@@ -75,10 +75,8 @@ public class EmailPasswordActivity extends MainActivity implements
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null) { // user is logged in
-        // TODO if user is logged in do something
-        }
-        /*updateUI(currentUser);*/
+
+        updateUI(currentUser);
 
     }
     // [END on_start_check_user]
