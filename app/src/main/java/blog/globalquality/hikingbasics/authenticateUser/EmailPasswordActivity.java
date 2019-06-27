@@ -44,10 +44,7 @@ public class EmailPasswordActivity extends MainActivity implements
     private TextView mDetailTextView;
     private EditText mEmailField;
     private EditText mPasswordField;
-
-    // [START declare_auth]
     private FirebaseAuth mAuth;
-    // [END declare_auth]
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +65,6 @@ public class EmailPasswordActivity extends MainActivity implements
 
         // [START initialize_auth]
         // Initialize Firebase Auth
-        // TODO Move to a background thread
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
     }
@@ -79,8 +75,10 @@ public class EmailPasswordActivity extends MainActivity implements
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        updateUI(currentUser);
+        if(currentUser != null) { // user is logged in
+        // TODO if user is logged in do something
+        }
+        /*updateUI(currentUser);*/
 
     }
     // [END on_start_check_user]
@@ -217,6 +215,8 @@ public class EmailPasswordActivity extends MainActivity implements
             findViewById(R.id.signedInButtons).setVisibility(View.VISIBLE);
 
             findViewById(R.id.verifyEmailButton).setEnabled(!user.isEmailVerified());
+
+            Log.d(TAG, "FirebaseUser signed in. user: " + user);
         } else {
             mStatusTextView.setText(R.string.signed_out);
             mDetailTextView.setText(null);
@@ -224,6 +224,8 @@ public class EmailPasswordActivity extends MainActivity implements
             findViewById(R.id.emailPasswordButtons).setVisibility(View.VISIBLE);
             findViewById(R.id.emailPasswordFields).setVisibility(View.VISIBLE);
             findViewById(R.id.signedInButtons).setVisibility(View.GONE);
+
+            Log.d(TAG, "No FirebaseUser signed in. user: " + user);
         }
     }
 
