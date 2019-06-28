@@ -80,6 +80,7 @@
     <string name="hint">Type your answer here</string>
 
     <string name="button_close">Score Quiz</string>
+    <string name="button_end_quiz">End Quiz</string>
 
     <!-- Firebase Authentication Layout -->
 

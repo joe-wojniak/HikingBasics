@@ -16,6 +16,7 @@
 
 package blog.globalquality.hikingbasics.authenticateUser;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -33,6 +34,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import blog.globalquality.hikingbasics.MainActivity;
 import blog.globalquality.hikingbasics.R;
 
 public class EmailPasswordActivity extends AppCompatActivity implements
@@ -126,6 +128,12 @@ public class EmailPasswordActivity extends AppCompatActivity implements
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+
+                            Intent returnIntent = new Intent();
+                            returnIntent.putExtra(MainActivity.REQUEST_RESULT, user);
+                            setResult(RESULT_OK, returnIntent);
+                            finish();
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -215,6 +223,8 @@ public class EmailPasswordActivity extends AppCompatActivity implements
             findViewById(R.id.verifyEmailButton).setEnabled(!user.isEmailVerified());
 
             Log.d(TAG, "FirebaseUser signed in. user: " + user);
+
+
         } else {
             mStatusTextView.setText(R.string.signed_out);
             mDetailTextView.setText(null);
