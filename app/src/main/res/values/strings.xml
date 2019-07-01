@@ -39,7 +39,7 @@
     <string name="menu_YouTubeBestPlaces">YouTube - Best Places</string>
 
     <string name="videowall_demo_name">Video Wall</string>
-    <string name="fragment_demo_name">Simple PlayerFragment</string>
+    <string name="fragment_demo_name">Hiking Video Quiz</string>
 
     <string name="playerfragment_text">This is a YouTubePlayerFragment!</string>
 

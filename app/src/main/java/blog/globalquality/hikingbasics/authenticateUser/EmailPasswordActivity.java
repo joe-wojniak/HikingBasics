@@ -16,7 +16,6 @@
 
 package blog.globalquality.hikingbasics.authenticateUser;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -34,7 +33,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import blog.globalquality.hikingbasics.MainActivity;
 import blog.globalquality.hikingbasics.R;
 
 public class EmailPasswordActivity extends AppCompatActivity implements
@@ -47,6 +45,7 @@ public class EmailPasswordActivity extends AppCompatActivity implements
     private EditText mEmailField;
     private EditText mPasswordField;
     private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,14 +66,27 @@ public class EmailPasswordActivity extends AppCompatActivity implements
 
         // [START initialize_auth]
         // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
+
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull final FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                if (null != user) {
+                    updateUI(user);
+                } else signOut();
+            }
+        };
+
     }
 
     // [START on_start_check_user]
     @Override
     public void onStart() {
         super.onStart();
+
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -82,6 +94,22 @@ public class EmailPasswordActivity extends AppCompatActivity implements
 
     }
     // [END on_start_check_user]
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if(null!=mAuthStateListener){
+            mAuth.addAuthStateListener(mAuthStateListener);
+        }
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        if(null!=mAuthStateListener){
+            mAuth.removeAuthStateListener(mAuthStateListener);
+        }
+    }
 
     private void createAccount(String email, String password) {
         Log.d(TAG, "createAccount:" + email);
@@ -128,12 +156,6 @@ public class EmailPasswordActivity extends AppCompatActivity implements
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-
-                            Intent returnIntent = new Intent();
-                            returnIntent.putExtra(MainActivity.REQUEST_RESULT, user);
-                            setResult(RESULT_OK, returnIntent);
-                            finish();
-
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -249,5 +271,15 @@ public class EmailPasswordActivity extends AppCompatActivity implements
         } else if (i == R.id.verifyEmailButton) {
             sendEmailVerification();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
     }
 }

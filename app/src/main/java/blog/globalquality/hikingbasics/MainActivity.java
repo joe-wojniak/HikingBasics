@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import blog.globalquality.hikingbasics.authenticateUser.EmailPasswordActivity;
 import blog.globalquality.hikingbasics.youTube.FragmentDemoActivity;
@@ -27,10 +30,6 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainActivity";
-
-    static final String AUTHENTICATE_USER = "AUTHENTICATE_USER"; // request to authenticate the User
-    static final String LOG_OUT = "LOG_OUT"; // request to log out
-    public static final String REQUEST_RESULT = "RESULT_AUTHENTICATED_USER"; // authenticated User
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,31 +53,18 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
-        // Start User sign-in activity
-        Intent i = new Intent(MainActivity.this, EmailPasswordActivity.class);
-        i.putExtra(Intent.EXTRA_TEXT, AUTHENTICATE_USER);
-        startActivityForResult(i, 1);
-
-        // End Quiz Activity
-        final Button button = findViewById(R.id.buttonEndQuiz);
-        Intent j = new Intent(MainActivity.this, EmailPasswordActivity.class);
-        button.setOnClickListener(v ->
-                startActivity(j));
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        String user = "Anonymous";
-        if (resultCode == RESULT_OK) {
-            user = Integer.toString(data.getIntExtra(REQUEST_RESULT, 0));
-            Log.d(TAG, "RESULT_AUTHENTICATED_USER " + user);
-            // TODO start Quiz - Authenticated User
-        } else {
-            Log.d(TAG, "ANONYMOUS_USER " + user);
-            // TODO start Quiz - Anonymous User
-        }
+    protected void onStart() {
+        super.onStart();
+        Log.i(TAG, "onStart");
+
+        // TODO show Leaderboard
+
+        // Start User sign-in activity
+        Intent i = new Intent(MainActivity.this, EmailPasswordActivity.class);
+        startActivity(i);
     }
 
     @Override
@@ -179,5 +165,38 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Log.i(TAG, "onResume");
+
+        //Check for signed-in user
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(null!=user) Toast.makeText(this, "User logged in: " + user, Toast.LENGTH_SHORT).show();
+
+        // End Quiz Activity
+        final Button button = findViewById(R.id.buttonEndQuiz);
+        Intent j = new Intent(MainActivity.this, EmailPasswordActivity.class);
+        button.setOnClickListener(v ->
+                startActivity(j));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(TAG, "onPause");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(null!=user) Toast.makeText(this, "User logged in: " + user, Toast.LENGTH_SHORT).show();
+    }
 }
 
