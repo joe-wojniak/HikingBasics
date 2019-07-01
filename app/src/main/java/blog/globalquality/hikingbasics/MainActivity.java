@@ -63,8 +63,14 @@ public class MainActivity extends AppCompatActivity
         // TODO show Leaderboard
 
         // Start User sign-in activity
-        Intent i = new Intent(MainActivity.this, EmailPasswordActivity.class);
-        startActivity(i);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (null != user) {
+            Toast.makeText(this, "User logged in: " + user, Toast.LENGTH_SHORT).show();
+        } else {
+            Intent i = new Intent(MainActivity.this, EmailPasswordActivity.class);
+            startActivity(i);
+        }
+
     }
 
     @Override
@@ -176,13 +182,31 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onResume(){
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(TAG, "onResume");
+
+        //Check for signed-in user
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (null != user)
+            Toast.makeText(this, "User logged in: " + user, Toast.LENGTH_SHORT).show();
+
+        // End Quiz Activity
+        final Button button = findViewById(R.id.buttonEndQuiz);
+        Intent j = new Intent(MainActivity.this, EmailPasswordActivity.class);
+        button.setOnClickListener(v ->
+                startActivity(j));
+    }
+
+    @Override
+    protected void onResume() {
         super.onResume();
         Log.i(TAG, "onResume");
 
         //Check for signed-in user
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(null!=user) Toast.makeText(this, "User logged in: " + user, Toast.LENGTH_SHORT).show();
+        if (null != user)
+            Toast.makeText(this, "User logged in: " + user, Toast.LENGTH_SHORT).show();
 
         // End Quiz Activity
         final Button button = findViewById(R.id.buttonEndQuiz);
@@ -196,7 +220,8 @@ public class MainActivity extends AppCompatActivity
         super.onPause();
         Log.i(TAG, "onPause");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(null!=user) Toast.makeText(this, "User logged in: " + user, Toast.LENGTH_SHORT).show();
+        if (null != user)
+            Toast.makeText(this, "User logged in: " + user, Toast.LENGTH_SHORT).show();
     }
 }
 

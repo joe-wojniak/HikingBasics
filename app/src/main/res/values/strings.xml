@@ -53,11 +53,11 @@
     <string name="titleLNT">Leave No Trace</string>
 
     <!-- Fragment Questions and Answers -->
-    <string name="avalancheQ1">Placeholder</string>
-    <string name="avalancheQ2">Placeholder</string>
-    <string name="avalancheQ3">Placeholder</string>
-    <string name="avalancheQ4">Placeholder</string>
-    <string name="avalancheQ5">Placeholder</string>
+    <string name="avalancheQ1">avalancheQ1</string>
+    <string name="avalancheQ2">avalancheQ2</string>
+    <string name="avalancheQ3">avalancheQ3</string>
+    <string name="avalancheQ4">avalancheQ4</string>
+    <string name="avalancheQ5">avalancheQ5</string>
 
     <string name="tenEssentialsQ1">Placeholder</string>
     <string name="tenEssentialsQ2">Placeholder</string>

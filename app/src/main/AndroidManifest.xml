@@ -20,6 +20,7 @@
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -51,8 +52,8 @@
 
         <activity
             android:name=".authenticateUser.EmailPasswordActivity"
-            android:screenOrientation="fullSensor"
             android:label="@string/name_authenticateuser"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="@string/minVersion"

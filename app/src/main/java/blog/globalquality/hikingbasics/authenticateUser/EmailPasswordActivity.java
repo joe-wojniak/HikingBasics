@@ -16,6 +16,7 @@
 
 package blog.globalquality.hikingbasics.authenticateUser;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -33,6 +34,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import blog.globalquality.hikingbasics.MainActivity;
 import blog.globalquality.hikingbasics.R;
 
 public class EmailPasswordActivity extends AppCompatActivity implements
@@ -66,7 +68,7 @@ public class EmailPasswordActivity extends AppCompatActivity implements
 
         // [START initialize_auth]
         // Initialize Firebase Auth
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -96,17 +98,17 @@ public class EmailPasswordActivity extends AppCompatActivity implements
     // [END on_start_check_user]
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
-        if(null!=mAuthStateListener){
+        if (null != mAuthStateListener) {
             mAuth.addAuthStateListener(mAuthStateListener);
         }
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
-        if(null!=mAuthStateListener){
+        if (null != mAuthStateListener) {
             mAuth.removeAuthStateListener(mAuthStateListener);
         }
     }
@@ -154,8 +156,8 @@ public class EmailPasswordActivity extends AppCompatActivity implements
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            Intent i = new Intent(EmailPasswordActivity.this, MainActivity.class);
+                            startActivity(i);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
