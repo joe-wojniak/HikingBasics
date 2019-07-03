@@ -21,12 +21,17 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import blog.globalquality.hikingbasics.R;
 
@@ -67,7 +72,6 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
                                         boolean wasRestored) {
         String videoId = null; // YouTube video ID
         int videoStart = 0;     // point at which to start the video, in milliseconds
-        String quiz = null; // QuizQuestionAnswerScore database reference
 
         if (!wasRestored) {
 
@@ -75,11 +79,9 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
             if (extras != null) {
                 videoId = extras.getString("videoId");
                 videoStart = extras.getInt("videoStart", 0);
-                quiz = extras.getString("quiz");
             }
 
             player.cueVideo(videoId, videoStart);
-            quiz(quiz);
         }
     }
 
@@ -91,7 +93,16 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
         if (null != user)
             Toast.makeText(this, "User logged in: " + user, Toast.LENGTH_SHORT).show();
 
+        String quiz = null; // QuizQuestionAnswerScore database reference
 
+        if (!wasRestored) {
+
+            Bundle extras = getIntent().getExtras();
+            if (extras != null) {
+                quiz = extras.getString("quiz");
+            }
+            quiz(quiz);
+        }
     }
 
     @Override
@@ -108,6 +119,8 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
         if (null != user)
             Toast.makeText(this, "User logged in: " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
 
+        // TODO code snippet reference: https://stackoverflow.com/a/42204089/8811523
+
         mQuizDatabaseReference = mDatabase.getReference().child(quiz);
         mUsersDatabaseReference = mDatabase.getReference().child("Users");
 
@@ -119,11 +132,26 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
 
         //TODO
         // populate quiz questions from database
-        mQuestion1.setText("Question1");
-        mQuestion2.setText("Question2");
-        mQuestion3.setText("Question3");
-        mQuestion4.setText("Question4");
-        mQuestion5.setText("Question5");
+        // TODO code snippet reference: https://stackoverflow.com/a/42204089/8811523
+        mQuizDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String question1 = (String) dataSnapshot.getValue();
+
+
+                mQuestion1.setText("Question1");
+                mQuestion2.setText("Question2");
+                mQuestion3.setText("Question3");
+                mQuestion4.setText("Question4");
+                mQuestion5.setText("Question5");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            // TODO onCancelled
+            }
+        });
+
     }
 
     public void checkQuiz(String quiz){

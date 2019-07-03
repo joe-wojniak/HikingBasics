@@ -13,17 +13,17 @@ package blog.globalquality.hikingbasics.quiz;
 
 public class QuizQuestionAnswerScore {
 
-    private String quiz;        // Firebase database collection
-    private String name;        // User's name - public name
-    private Integer quizScore;  // User's quiz score
-    private String document;    // Firebase database document for 1 question & answer pair
-    private String response;    // User's answer (response) to the question
-    private String question;    // the question
-    private String answer;      // the answer matching the question
-    private String choice1;     // multiple choice answer #1
-    private String choice2;     // multiple choice answer #2
-    private String choice3;     // multiple choice answer #3
-    private String choice4;     // multiple choice answer #4
+    public String quiz;        // Firebase database collection
+    public String name;        // User's name - public name
+    public Integer quizScore;  // User's quiz score
+    public String document;    // Firebase database document for 1 question & answer pair
+    public String response;    // User's answer (response) to the question
+    public String question;    // the question
+    public String answer;      // the answer matching the question
+    public String choice1;     // multiple choice answer #1
+    public String choice2;     // multiple choice answer #2
+    public String choice3;     // multiple choice answer #3
+    public String choice4;     // multiple choice answer #4
 
     public QuizQuestionAnswerScore() {
     }
