@@ -18,26 +18,33 @@ package blog.globalquality.hikingbasics.youTube;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import blog.globalquality.hikingbasics.R;
 
-/**
- * A simple YouTube Android API demo application which shows how to create a simple application that
- * shows a YouTube Video in a {@link YouTubePlayerFragment}.
- * <p>
- * Note, this sample app extends from {@link YouTubeFailureRecoveryActivity} to handle errors, which
- * itself extends {@link YouTubeBaseActivity}. However, you are not required to extend
- * {@link YouTubeBaseActivity} if using {@link YouTubePlayerFragment}s.
- */
 public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
 
-    private DatabaseReference mDatabase;
+    // Quiz Questions
+    private TextView mQuestion1;
+    private TextView mQuestion2;
+    private TextView mQuestion3;
+    private TextView mQuestion4;
+    private TextView mQuestion5;
+
+    // Firebase instance variables
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mQuizDatabaseReference;
+    private DatabaseReference mUsersDatabaseReference;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,11 +52,14 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
 
         setContentView(R.layout.fragments_demo);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-
+        // Setup YouTube Player Fragment
         YouTubePlayerFragment youTubePlayerFragment =
                 (YouTubePlayerFragment) getFragmentManager().findFragmentById(R.id.youtube_fragment);
         youTubePlayerFragment.initialize(DeveloperKey.DEVELOPER_KEY, this);
+
+        // Initialize Firebase components
+        mDatabase = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -64,13 +74,24 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
                 videoId = extras.getString("videoId");
-                videoStart = extras.getInt("videoStart",0);
+                videoStart = extras.getInt("videoStart", 0);
                 quiz = extras.getString("quiz");
             }
 
             player.cueVideo(videoId, videoStart);
-            quiz();
+            quiz(quiz);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (null != user)
+            Toast.makeText(this, "User logged in: " + user, Toast.LENGTH_SHORT).show();
+
+
     }
 
     @Override
@@ -82,12 +103,44 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
         finish();
     }
 
-    public void quiz(){
+    public void quiz(String quiz) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (null != user)
+            Toast.makeText(this, "User logged in: " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
+
+        mQuizDatabaseReference = mDatabase.getReference().child(quiz);
+        mUsersDatabaseReference = mDatabase.getReference().child("Users");
+
+        mQuestion1 = findViewById(R.id.fragmentQ1);
+        mQuestion2 = findViewById(R.id.fragmentQ2);
+        mQuestion3 = findViewById(R.id.fragmentQ3);
+        mQuestion4 = findViewById(R.id.fragmentQ4);
+        mQuestion5 = findViewById(R.id.fragmentQ5);
+
         //TODO
-        // populate quiz questions
-        // check answers
-        // score quiz
-        // store score
+        // populate quiz questions from database
+        mQuestion1.setText("Question1");
+        mQuestion2.setText("Question2");
+        mQuestion3.setText("Question3");
+        mQuestion4.setText("Question4");
+        mQuestion5.setText("Question5");
     }
 
+    public void checkQuiz(String quiz){
+        mQuizDatabaseReference = mDatabase.getReference().child(quiz);
+        mUsersDatabaseReference = mDatabase.getReference().child("Users");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        //TODO
+        // check answers
+        Integer score = 0;
+        storeScore(user, quiz,score);
+    }
+
+    public void storeScore(FirebaseUser user, String quiz, Integer score){
+        mQuizDatabaseReference = mDatabase.getReference().child(quiz);
+        mUsersDatabaseReference = mDatabase.getReference().child("Users");
+
+        //TODO
+        // store score
+    }
 }

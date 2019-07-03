@@ -184,12 +184,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.i(TAG, "onResume");
-
-        //Check for signed-in user
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (null != user)
-            Toast.makeText(this, "User logged in: " + user, Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "onRestart");
 
         // End Quiz Activity
         final Button button = findViewById(R.id.buttonEndQuiz);
@@ -203,11 +198,6 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         Log.i(TAG, "onResume");
 
-        //Check for signed-in user
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (null != user)
-            Toast.makeText(this, "User logged in: " + user, Toast.LENGTH_SHORT).show();
-
         // End Quiz Activity
         final Button button = findViewById(R.id.buttonEndQuiz);
         Intent j = new Intent(MainActivity.this, EmailPasswordActivity.class);
@@ -219,9 +209,7 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
         Log.i(TAG, "onPause");
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (null != user)
-            Toast.makeText(this, "User logged in: " + user, Toast.LENGTH_SHORT).show();
+
     }
 }
 
