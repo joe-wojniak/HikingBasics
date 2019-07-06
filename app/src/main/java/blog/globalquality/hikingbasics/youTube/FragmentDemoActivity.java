@@ -17,7 +17,10 @@
 package blog.globalquality.hikingbasics.youTube;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +40,8 @@ import blog.globalquality.hikingbasics.R;
 
 public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
 
+    private static final String TAG = "FragmentDemoActivity";
+
     // Quiz Questions
     private TextView mQuestion1;
     private TextView mQuestion2;
@@ -44,10 +49,16 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
     private TextView mQuestion4;
     private TextView mQuestion5;
 
+    // Quiz Responses
+    private EditText mResponse1;
+    private EditText mResponse2;
+    private EditText mResponse3;
+    private EditText mResponse4;
+    private EditText mResponse5;
+
     // Firebase instance variables
     private FirebaseDatabase mDatabase;
-    private DatabaseReference mQuizDatabaseReference;
-    private DatabaseReference mUsersDatabaseReference;
+    private DatabaseReference mDatabaseReference;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
@@ -64,7 +75,23 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
 
         // Initialize Firebase components
         mDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mDatabase.getReference();
         mAuth = FirebaseAuth.getInstance();
+
+        // Setup variables to display Questions
+        mQuestion1 = findViewById(R.id.fragmentQ1);
+        mQuestion2 = findViewById(R.id.fragmentQ2);
+        mQuestion3 = findViewById(R.id.fragmentQ3);
+        mQuestion4 = findViewById(R.id.fragmentQ4);
+        mQuestion5 = findViewById(R.id.fragmentQ5);
+
+        // Setup variables to get Responses
+        mResponse1 = findViewById(R.id.fragmentA1);
+        mResponse2 = findViewById(R.id.fragmentA2);
+        mResponse3 = findViewById(R.id.fragmentA3);
+        mResponse4 = findViewById(R.id.fragmentA4);
+        mResponse5 = findViewById(R.id.fragmentA5);
+
     }
 
     @Override
@@ -93,16 +120,23 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
         if (null != user)
             Toast.makeText(this, "User logged in: " + user, Toast.LENGTH_SHORT).show();
 
-        String quiz = null; // QuizQuestionAnswerScore database reference
-
-        if (!wasRestored) {
-
-            Bundle extras = getIntent().getExtras();
-            if (extras != null) {
-                quiz = extras.getString("quiz");
-            }
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            final String quiz = extras.getString("quiz");
             quiz(quiz);
         }
+
+        final Button buttonScoreQuiz = findViewById(R.id.buttonScoreQuiz);
+        buttonScoreQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle extras = getIntent().getExtras();
+                if (extras != null) {
+                    final String quiz = extras.getString("quiz");
+                    checkQuiz(quiz);
+                }
+            }
+        });
     }
 
     @Override
@@ -115,60 +149,77 @@ public class FragmentDemoActivity extends YouTubeFailureRecoveryActivity {
     }
 
     public void quiz(String quiz) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (null != user)
-            Toast.makeText(this, "User logged in: " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
-
-        // TODO code snippet reference: https://stackoverflow.com/a/42204089/8811523
-
-        mQuizDatabaseReference = mDatabase.getReference().child(quiz);
-        mUsersDatabaseReference = mDatabase.getReference().child("Users");
-
-        mQuestion1 = findViewById(R.id.fragmentQ1);
-        mQuestion2 = findViewById(R.id.fragmentQ2);
-        mQuestion3 = findViewById(R.id.fragmentQ3);
-        mQuestion4 = findViewById(R.id.fragmentQ4);
-        mQuestion5 = findViewById(R.id.fragmentQ5);
 
         //TODO
         // populate quiz questions from database
-        // TODO code snippet reference: https://stackoverflow.com/a/42204089/8811523
-        mQuizDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String question1 = (String) dataSnapshot.getValue();
 
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    String question1 = (String) postSnapshot.child(quiz).child("Question1").getValue();
+                    /*String question2 = (String) postSnapshot.child(quiz).child("Question2").getValue();
+                    String question3 = (String) postSnapshot.child(quiz).child("Question3").getValue();
+                    String question4 = (String) postSnapshot.child(quiz).child("Question4").getValue();
+                    String question5 = (String) postSnapshot.child(quiz).child("Question5").getValue();*/
 
-                mQuestion1.setText("Question1");
-                mQuestion2.setText("Question2");
-                mQuestion3.setText("Question3");
-                mQuestion4.setText("Question4");
-                mQuestion5.setText("Question5");
+                    mQuestion1.setText(question1);
+                    /*mQuestion2.setText(question2);
+                     mQuestion3.setText(question3);
+                    mQuestion4.setText(question4);
+                    mQuestion5.setText(question5);*/
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-            // TODO onCancelled
+                // Failed to read value
+                Log.e(TAG, "Failed to read app title value.", databaseError.toException());
             }
         });
 
     }
 
-    public void checkQuiz(String quiz){
-        mQuizDatabaseReference = mDatabase.getReference().child(quiz);
-        mUsersDatabaseReference = mDatabase.getReference().child("Users");
+    public void checkQuiz(String quiz) {
+        // TODO check responses
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        //TODO
-        // check answers
-        Integer score = 0;
-        storeScore(user, quiz,score);
+
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            String answer1 = null;
+            String response1;
+            Integer score = 0;
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                String userId = user.getUid();
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    answer1 = (String) postSnapshot.child(quiz).child("Answer1").getValue();
+                    /*String answer2 = (String) postSnapshot.child(quiz).child("Answer2").getValue();
+                    String answer3 = (String) postSnapshot.child(quiz).child("Answer3").getValue();
+                    String answer4 = (String) postSnapshot.child(quiz).child("Answer4").getValue();
+                    String answer5 = (String) postSnapshot.child(quiz).child("Answer5").getValue();*/
+                    score = (Integer) postSnapshot.child("users").child(userId).getValue();
+                }
+
+                response1 = mResponse1.getText().toString();
+                if (answer1.equalsIgnoreCase(response1)) {
+                    score++;
+                    storeUserScore(userId, score);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Failed to read value
+                Log.e(TAG, "Failed to read app title value.", databaseError.toException());
+            }
+
+            private void storeUserScore(String userId, Integer score) {
+                mDatabaseReference.child("users").child(userId).setValue(score);
+            }
+        });
     }
 
-    public void storeScore(FirebaseUser user, String quiz, Integer score){
-        mQuizDatabaseReference = mDatabase.getReference().child(quiz);
-        mUsersDatabaseReference = mDatabase.getReference().child("Users");
-
-        //TODO
-        // store score
-    }
 }

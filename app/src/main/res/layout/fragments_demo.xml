@@ -43,7 +43,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/buttonScoreQuiz"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -57,6 +57,7 @@
                 android:id="@+id/fragmentQ1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginTop"
                 android:text="@string/avalancheQ1" />
 
             <EditText
@@ -75,13 +76,6 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/paddingTop"
                 android:text="@string/avalancheQ2" />
-
-            <TextView
-                android:id="@+id/fragmentQ4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/paddingTop"
-                android:text="@string/avalancheQ4" />
 
             <EditText
                 android:id="@+id/fragmentA2"
@@ -109,6 +103,13 @@
                 android:inputType="text"
                 android:paddingTop="@dimen/paddingTop"
                 tools:targetApi="o" />
+
+            <TextView
+                android:id="@+id/fragmentQ4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/paddingTop"
+                android:text="@string/avalancheQ4" />
 
             <EditText
                 android:id="@+id/fragmentA4"
@@ -140,13 +141,12 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonScoreQuiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_weight="1"
-        android:onClick="onClickClose"
         android:text="@string/button_close"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
