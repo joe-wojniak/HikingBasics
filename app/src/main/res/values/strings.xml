@@ -39,20 +39,21 @@
     <string name="menu_YouTubeBestPlaces">YouTube - Best Places</string>
 
     <string name="videowall_demo_name">Video Wall</string>
-    <string name="fragment_demo_name">Hiking Video Quiz</string>
+    <string name="fragment_demo_name">Hiking Video</string>
 
     <string name="playerfragment_text">This is a YouTubePlayerFragment!</string>
 
     <string name="error_thumbnail_view">There was an error initializing the YouTubeThumbnailView (%1$s)</string>
     <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
 
-    <!-- Fragment Titles -->
+    <!-- Quiz Titles -->
+    <string name="titleQuiz">Quiz</string>
     <string name="titleAvalanche">Avalanche</string>
     <string name="titleTenEssentials">The 10 Essentials</string>
     <string name="titleNavigation">Navigation</string>
     <string name="titleLNT">Leave No Trace</string>
 
-    <!-- Fragment Questions and Answers -->
+    <!-- Dummy Quiz Questions and Answers -->
     <string name="avalancheQ1">avalancheQ1</string>
     <string name="avalancheQ2">avalancheQ2</string>
     <string name="avalancheQ3">avalancheQ3</string>
@@ -79,8 +80,12 @@
 
     <string name="hint">Type your answer here</string>
 
-    <string name="button_close">Score Quiz</string>
+    <string name="button_score_quiz">Score Quiz</string>
+    <string name="button_start_quiz">Start Quiz</string>
     <string name="button_end_quiz">End Quiz</string>
+    <string name="button_close">Close</string>
+
+    <string name="user_score_title">Current Score:</string>
 
     <!-- Firebase Authentication Layout -->
 

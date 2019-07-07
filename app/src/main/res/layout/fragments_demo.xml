@@ -17,8 +17,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
     <fragment
         android:id="@+id/youtube_fragment"
@@ -26,131 +25,28 @@
         android:layout_width="392dp"
         android:layout_height="345dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="8dp"
         android:layout_weight="1"
         android:minHeight="@dimen/layoutSize"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:id="@+id/scrollView3"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/layoutSizeSmall"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/buttonScoreQuiz"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/fragmentQ1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/marginTop"
-                android:text="@string/avalancheQ1" />
-
-            <EditText
-                android:id="@+id/fragmentA1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints="@string/hint"
-                android:hint="@string/hint"
-                android:inputType="text"
-                android:paddingTop="@dimen/paddingTop"
-                tools:targetApi="o" />
-
-            <TextView
-                android:id="@+id/fragmentQ2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/paddingTop"
-                android:text="@string/avalancheQ2" />
-
-            <EditText
-                android:id="@+id/fragmentA2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints="@string/hint"
-                android:hint="@string/hint"
-                android:inputType="text"
-                android:paddingTop="@dimen/paddingTop"
-                tools:targetApi="o" />
-
-            <TextView
-                android:id="@+id/fragmentQ3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/paddingTop"
-                android:text="@string/avalancheQ3" />
-
-            <EditText
-                android:id="@+id/fragmentA3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints="@string/hint"
-                android:hint="@string/hint"
-                android:inputType="text"
-                android:paddingTop="@dimen/paddingTop"
-                tools:targetApi="o" />
-
-            <TextView
-                android:id="@+id/fragmentQ4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/paddingTop"
-                android:text="@string/avalancheQ4" />
-
-            <EditText
-                android:id="@+id/fragmentA4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints="@string/hint"
-                android:hint="@string/hint"
-                android:inputType="text"
-                android:paddingTop="@dimen/paddingTop"
-                tools:targetApi="o" />
-
-            <TextView
-                android:id="@+id/fragmentQ5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/paddingTop"
-                android:text="@string/avalancheQ5" />
-
-            <EditText
-                android:id="@+id/fragmentA5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:autofillHints="@string/hint"
-                android:hint="@string/hint"
-                android:inputType="text"
-                android:paddingTop="@dimen/paddingTop"
-                tools:targetApi="o" />
-        </LinearLayout>
-    </ScrollView>
-
     <Button
-        android:id="@+id/buttonScoreQuiz"
+        android:id="@+id/buttonStartQuiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_weight="1"
-        android:text="@string/button_close"
+        android:text="@string/button_start_quiz"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/youtube_fragment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
