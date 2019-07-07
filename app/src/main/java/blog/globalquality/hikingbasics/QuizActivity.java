@@ -134,9 +134,11 @@ public class QuizActivity extends AppCompatActivity {
                     mQuestion5.setText(question5);*/
                     }
 
-                    score_temp = (Long) dataSnapshot.child("users").child(userId).getValue();
-                    score = score_temp.intValue();
-                    mScore.setText(score.toString());
+                    score_temp = (Long) dataSnapshot.child("users").child(userId).child("score").getValue();
+                    if (score_temp != null) {
+                        score = score_temp.intValue();
+                        mScore.setText(score.toString());
+                    }
                 }
             }
 
@@ -154,7 +156,7 @@ public class QuizActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            Integer score;
+            Integer score=0;
             Long score_temp;
             String userId = user.getUid();
             String answer1 = null;
@@ -169,19 +171,28 @@ public class QuizActivity extends AppCompatActivity {
                   String answer4 = (String) answerSnapshot.child(quiz).child("Answer4").getValue();
                   String answer5 = (String) answerSnapshot.child(quiz).child("Answer5").getValue();*/
 
-                score_temp = (Long) dataSnapshot.child("users").child(userId).getValue();
-                score = score_temp.intValue();
+                score_temp = (Long) dataSnapshot.child("users").child(userId).child("score").getValue();
+                if (score_temp != null) {
+                    score = score_temp.intValue();
+                    mScore.setText(score.toString());
+                }
 
-                response1 = mResponse1.getText().toString();
+                response1 = (String) dataSnapshot.child("users").child(userId).child("response1").getValue();
 
-                if (response1 != null) {
-                    if (answer1 != null) {
-                        if (answer1.equalsIgnoreCase(response1)) {
-                            score++;
-                            mScore.setText(score.toString());
-                            mDatabaseReference.child("users").child(userId).setValue(score);
+                if (null == response1) {
+                    response1 = mResponse1.getText().toString();
+
+                    if (response1 != null) {
+                        if (answer1 != null) {
+                            if (answer1.equalsIgnoreCase(response1)) {
+                                score++;
+                                mScore.setText(score.toString());
+                                mDatabaseReference.child("users").child(userId).child("score").setValue(score);
+                                mDatabaseReference.child("users").child(userId).child("response1").setValue(response1);
+                            }
                         }
                     }
+
                 }
             }
 
