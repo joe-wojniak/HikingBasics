@@ -55,12 +55,11 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
         Log.i(TAG, "onStart");
-
-        // TODO show Leaderboard
 
         // Start User sign-in activity
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -186,7 +185,7 @@ public class MainActivity extends AppCompatActivity
         super.onRestart();
         Log.i(TAG, "onRestart");
 
-        // End Quiz Activity
+// End Quiz Activity
         final Button button = findViewById(R.id.buttonEndQuiz);
         Intent j = new Intent(MainActivity.this, EmailPasswordActivity.class);
         button.setOnClickListener(v ->
@@ -198,7 +197,7 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         Log.i(TAG, "onResume");
 
-        // End Quiz Activity
+// End Quiz Activity
         final Button button = findViewById(R.id.buttonEndQuiz);
         Intent j = new Intent(MainActivity.this, EmailPasswordActivity.class);
         button.setOnClickListener(v ->
