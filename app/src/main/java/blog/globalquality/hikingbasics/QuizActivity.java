@@ -86,7 +86,7 @@ public class QuizActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = mAuth.getCurrentUser();
         if (null != user) {
             Toast.makeText(this, "User logged in: " + user, Toast.LENGTH_SHORT).show();
         }
@@ -108,7 +108,7 @@ public class QuizActivity extends AppCompatActivity {
 
         //TODO populate quiz questions from database
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = mAuth.getCurrentUser();
         String userId = user.getUid();
 
         mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -153,12 +153,13 @@ public class QuizActivity extends AppCompatActivity {
 
     public void checkQuiz(String quiz) {
         // TODO check responses
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId = user.getUid();
+        String userEmail = user.getEmail();
 
         mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            Integer score=0;
+            Integer score = 0;
             Long score_temp;
-            String userId = user.getUid();
             String answer1 = null;
             String response1 = null;
 
@@ -186,7 +187,19 @@ public class QuizActivity extends AppCompatActivity {
                         if (answer1 != null) {
                             if (answer1.equalsIgnoreCase(response1)) {
                                 score++;
-                                mScore.setText(score.toString());
+
+                                // [Make userName]
+                                String userName = null;
+                                if (null != userEmail) {
+                                    int index = userEmail.indexOf("@");
+                                    if (index != -1) {
+                                        userName = userEmail.substring(0, index);
+                                    }
+                                }
+
+                                mScore.setText(score.toString()); // update displayed score
+
+                                mDatabaseReference.child("users").child(userId).child("name").setValue(userName);
                                 mDatabaseReference.child("users").child(userId).child("score").setValue(score);
                                 mDatabaseReference.child("users").child(userId).child("response1").setValue(response1);
                             }

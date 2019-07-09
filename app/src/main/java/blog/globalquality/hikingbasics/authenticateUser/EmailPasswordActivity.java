@@ -142,6 +142,32 @@ public class EmailPasswordActivity extends AppCompatActivity implements
         // [END create_user_with_email]
     }
 
+    private void updateUserProfile(){
+        // [Make default user DisplayName for profile]
+        FirebaseUser user = mAuth.getCurrentUser();
+        String email = user.getEmail();
+        String userName;
+
+        if (null != email) {
+            int index = email.indexOf("@");
+            if (index != -1) {
+                userName = email.substring(0, index);
+            }
+        }
+
+        /*Can't get this to work- displayName, etc cannot be resolved:
+        // Updates the user attributes:
+        user.updateProfile({ displayName: "Jane Q. User"}).then(function() {
+            // Profile updated successfully!
+            // "Jane Q. User"
+            var displayName = user.displayName;
+
+        }, function(error) {
+            // An error happened.
+        });*/
+
+    }
+
     private void signIn(String email, String password) {
         Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
@@ -247,7 +273,6 @@ public class EmailPasswordActivity extends AppCompatActivity implements
             findViewById(R.id.verifyEmailButton).setEnabled(!user.isEmailVerified());
 
             Log.d(TAG, "FirebaseUser signed in. user: " + user);
-
 
         } else {
             mStatusTextView.setText(R.string.signed_out);
