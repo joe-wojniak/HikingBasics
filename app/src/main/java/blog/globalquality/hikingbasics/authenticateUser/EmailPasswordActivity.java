@@ -33,6 +33,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import blog.globalquality.hikingbasics.MainActivity;
 import blog.globalquality.hikingbasics.R;
@@ -129,6 +130,7 @@ public class EmailPasswordActivity extends AppCompatActivity implements
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+                            updateUserProfile();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -142,30 +144,32 @@ public class EmailPasswordActivity extends AppCompatActivity implements
         // [END create_user_with_email]
     }
 
-    private void updateUserProfile(){
+    private void updateUserProfile() {
         // [Make default user DisplayName for profile]
         FirebaseUser user = mAuth.getCurrentUser();
         String email = user.getEmail();
-        String userName;
+        String userName = null;
 
         if (null != email) {
             int index = email.indexOf("@");
             if (index != -1) {
                 userName = email.substring(0, index);
             }
+            if (null != userName) {
+                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                        .setDisplayName(userName)
+                        .build();
+                user.updateProfile(profileUpdates)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "User profile updated.");
+                                }
+                            }
+                        });
+            }
         }
-
-        /*Can't get this to work- displayName, etc cannot be resolved:
-        // Updates the user attributes:
-        user.updateProfile({ displayName: "Jane Q. User"}).then(function() {
-            // Profile updated successfully!
-            // "Jane Q. User"
-            var displayName = user.displayName;
-
-        }, function(error) {
-            // An error happened.
-        });*/
-
     }
 
     private void signIn(String email, String password) {

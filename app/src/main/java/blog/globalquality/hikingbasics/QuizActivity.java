@@ -19,6 +19,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class QuizActivity extends AppCompatActivity {
 
     private static final String TAG = "QuizActivity";
@@ -121,18 +127,16 @@ public class QuizActivity extends AppCompatActivity {
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     String question1 = (String) postSnapshot.child(quiz).child("Question1").getValue();
-                    /*String question2 = (String) postSnapshot.child(quiz).child("Question2").getValue();
+                    String question2 = (String) postSnapshot.child(quiz).child("Question2").getValue();
                     String question3 = (String) postSnapshot.child(quiz).child("Question3").getValue();
                     String question4 = (String) postSnapshot.child(quiz).child("Question4").getValue();
-                    String question5 = (String) postSnapshot.child(quiz).child("Question5").getValue();*/
+                    String question5 = (String) postSnapshot.child(quiz).child("Question5").getValue();
 
-                    if (null != question1) {
-                        mQuestion1.setText(question1);
-                    /*mQuestion2.setText(question2);
-                     mQuestion3.setText(question3);
+                    mQuestion1.setText(question1);
+                    mQuestion2.setText(question2);
+                    mQuestion3.setText(question3);
                     mQuestion4.setText(question4);
-                    mQuestion5.setText(question5);*/
-                    }
+                    mQuestion5.setText(question5);
 
                     score_temp = (Long) dataSnapshot.child("users").child(userId).child("score").getValue();
                     if (score_temp != null) {
@@ -160,17 +164,30 @@ public class QuizActivity extends AppCompatActivity {
         mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             Integer score = 0;
             Long score_temp;
+            // The correct Answers to Questions
             String answer1 = null;
+            String answer2 = null;
+            String answer3 = null;
+            String answer4 = null;
+            String answer5 = null;
+            // User's Responses to Questions
             String response1 = null;
+            String response2 = null;
+            String response3 = null;
+            String response4 = null;
+            String response5 = null;
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 answer1 = (String) dataSnapshot.child("Quiz").child(quiz).child("Answer1").getValue();
-                /*String answer2 = (String) answerSnapshot.child(quiz).child("Answer2").getValue();
-                  String answer3 = (String) answerSnapshot.child(quiz).child("Answer3").getValue();
-                  String answer4 = (String) answerSnapshot.child(quiz).child("Answer4").getValue();
-                  String answer5 = (String) answerSnapshot.child(quiz).child("Answer5").getValue();*/
+                answer2 = (String) dataSnapshot.child("Quiz").child(quiz).child("Answer2").getValue();
+                answer3 = (String) dataSnapshot.child("Quiz").child(quiz).child("Answer3").getValue();
+                answer4 = (String) dataSnapshot.child("Quiz").child(quiz).child("Answer4").getValue();
+                answer5 = (String) dataSnapshot.child("Quiz").child(quiz).child("Answer5").getValue();
+
+                List<String> answerList = new ArrayList<>(Arrays.asList(answer1, answer2, answer3,
+                        answer4, answer5));
 
                 score_temp = (Long) dataSnapshot.child("users").child(userId).child("score").getValue();
                 if (score_temp != null) {
@@ -179,34 +196,56 @@ public class QuizActivity extends AppCompatActivity {
                 }
 
                 response1 = (String) dataSnapshot.child("users").child(userId).child("response1").getValue();
+                response2 = (String) dataSnapshot.child("users").child(userId).child("response2").getValue();
+                response3 = (String) dataSnapshot.child("users").child(userId).child("response3").getValue();
+                response4 = (String) dataSnapshot.child("users").child(userId).child("response4").getValue();
+                response5 = (String) dataSnapshot.child("users").child(userId).child("response5").getValue();
 
-                if (null == response1) {
-                    response1 = mResponse1.getText().toString();
+                List<String> responseList = new ArrayList<>(Arrays.asList(response1, response2, response3,
+                        response4, response5));
 
-                    if (response1 != null) {
-                        if (answer1 != null) {
-                            if (answer1.equalsIgnoreCase(response1)) {
-                                score++;
+                for (int i = 0; i < responseList.size(); ++i) {
+                    if (null == responseList.get(i)) {
+                        switch (i) {
+                            case 0:
+                                responseList.add(i, mResponse1.getText().toString());
+                            case 1:
+                                responseList.add(i, mResponse2.getText().toString());
+                            case 2:
+                                responseList.add(i, mResponse3.getText().toString());
+                            case 3:
+                                responseList.add(i, mResponse4.getText().toString());
+                            case 4:
+                                responseList.add(i, mResponse5.getText().toString());
+                        }
+                    } else if (answerList.get(i).equalsIgnoreCase(responseList.get(i))) {
+                        ++score;
+                    }
+                }
 
-                                // [Make userName]
-                                String userName = null;
-                                if (null != userEmail) {
-                                    int index = userEmail.indexOf("@");
-                                    if (index != -1) {
-                                        userName = userEmail.substring(0, index);
-                                    }
-                                }
+                String userName = user.getDisplayName();
 
-                                mScore.setText(score.toString()); // update displayed score
-
-                                mDatabaseReference.child("users").child(userId).child("name").setValue(userName);
-                                mDatabaseReference.child("users").child(userId).child("score").setValue(score);
-                                mDatabaseReference.child("users").child(userId).child("response1").setValue(response1);
-                            }
+                if (null == userName) {
+                    // [Make userName if DisplayName doesn't exist]
+                    if (null != userEmail) {
+                        int index = userEmail.indexOf("@");
+                        if (index != -1) {
+                            userName = userEmail.substring(0, index);
                         }
                     }
-
                 }
+
+                mScore.setText(score.toString()); // update displayed score
+
+                String key = mDatabaseReference.child(userId).push().getKey();
+                mDatabaseReference.child("users").child(userId).child("name").setValue(userName);
+                mDatabaseReference.child("users").child(userId).child("/score/" + key).setValue(score);
+
+                Map<String, Object> userResponses = new HashMap<>();
+                for (int i = 0; i < responseList.size(); ++i) {
+                    userResponses.put("/users/" + userId + "/response/" + key + i, responseList.get(i));
+                }
+                mDatabaseReference.updateChildren(userResponses);
             }
 
             @Override
