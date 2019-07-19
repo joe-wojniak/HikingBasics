@@ -21,9 +21,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -97,6 +97,12 @@ public class QuizActivity extends AppCompatActivity {
             Toast.makeText(this, "User logged in: " + user, Toast.LENGTH_SHORT).show();
         }
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            final String quiz = extras.getString("quiz");
+            quiz(quiz);
+        }
+
         final Button buttonScoreQuiz = findViewById(R.id.buttonScoreQuiz);
         buttonScoreQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +126,6 @@ public class QuizActivity extends AppCompatActivity {
         mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
             Integer score;
-            Long score_temp;
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -138,9 +143,9 @@ public class QuizActivity extends AppCompatActivity {
                     mQuestion4.setText(question4);
                     mQuestion5.setText(question5);
 
-                    score_temp = (Long) dataSnapshot.child("users").child(userId).child("score").getValue();
+                    Object score_temp = dataSnapshot.child("users").child(userId).child("score").getValue();
                     if (score_temp != null) {
-                        score = score_temp.intValue();
+                        score = Integer.valueOf(String.valueOf(score_temp));
                         mScore.setText(score.toString());
                     }
                 }
@@ -163,7 +168,7 @@ public class QuizActivity extends AppCompatActivity {
 
         mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             Integer score = 0;
-            Long score_temp;
+
             // The correct Answers to Questions
             String answer1 = null;
             String answer2 = null;
@@ -189,37 +194,66 @@ public class QuizActivity extends AppCompatActivity {
                 List<String> answerList = new ArrayList<>(Arrays.asList(answer1, answer2, answer3,
                         answer4, answer5));
 
-                score_temp = (Long) dataSnapshot.child("users").child(userId).child("score").getValue();
+                Object score_temp = dataSnapshot.child("users").child(userId).child("score").getValue();
                 if (score_temp != null) {
-                    score = score_temp.intValue();
+                    score = Integer.valueOf(String.valueOf(score_temp));
                     mScore.setText(score.toString());
                 }
 
-                response1 = (String) dataSnapshot.child("users").child(userId).child("response1").getValue();
-                response2 = (String) dataSnapshot.child("users").child(userId).child("response2").getValue();
-                response3 = (String) dataSnapshot.child("users").child(userId).child("response3").getValue();
-                response4 = (String) dataSnapshot.child("users").child(userId).child("response4").getValue();
-                response5 = (String) dataSnapshot.child("users").child(userId).child("response5").getValue();
+                response1 = (String) dataSnapshot.child("users").child(userId).child(quiz).child("response0").getValue();
+                response2 = (String) dataSnapshot.child("users").child(userId).child(quiz).child("response1").getValue();
+                response3 = (String) dataSnapshot.child("users").child(userId).child(quiz).child("response2").getValue();
+                response4 = (String) dataSnapshot.child("users").child(userId).child(quiz).child("response3").getValue();
+                response5 = (String) dataSnapshot.child("users").child(userId).child(quiz).child("response4").getValue();
 
                 List<String> responseList = new ArrayList<>(Arrays.asList(response1, response2, response3,
                         response4, response5));
 
-                for (int i = 0; i < responseList.size(); ++i) {
-                    if (null == responseList.get(i)) {
-                        switch (i) {
-                            case 0:
+                List<Integer> new_try = new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0));
+
+                for (int i = 0; i < 5; ++i) {
+                    switch (i) {
+                        case 0:
+                            if (null == responseList.get(i)) {
+                                new_try.add(i, 1);
                                 responseList.add(i, mResponse1.getText().toString());
-                            case 1:
+                            }
+                            break;
+                        case 1:
+                            if (null == responseList.get(i)) {
+                                new_try.add(i, 1);
                                 responseList.add(i, mResponse2.getText().toString());
-                            case 2:
+                            }
+                            break;
+                        case 2:
+                            if (null == responseList.get(i)) {
+                                new_try.add(i, 1);
                                 responseList.add(i, mResponse3.getText().toString());
-                            case 3:
+                            }
+                            break;
+                        case 3:
+                            if (null == responseList.get(i)) {
+                                new_try.add(i, 1);
                                 responseList.add(i, mResponse4.getText().toString());
-                            case 4:
+                            }
+                            break;
+                        case 4:
+                            if (null == responseList.get(i)) {
+                                new_try.add(i, 1);
                                 responseList.add(i, mResponse5.getText().toString());
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                for (int i = 0; i < 5; ++i) {
+                    if (new_try.get(i) == 1) {
+                        if (answerList.get(i).equalsIgnoreCase(responseList.get(i))) {
+                            ++score;
+                            mScore.setText(score.toString()); // update displayed score
                         }
-                    } else if (answerList.get(i).equalsIgnoreCase(responseList.get(i))) {
-                        ++score;
                     }
                 }
 
@@ -235,15 +269,22 @@ public class QuizActivity extends AppCompatActivity {
                     }
                 }
 
-                mScore.setText(score.toString()); // update displayed score
+                if (null != userName) {
+                    mDatabaseReference.child("users").child(userId).child("name").setValue(userName);
+                }
 
-                String key = mDatabaseReference.child(userId).push().getKey();
-                mDatabaseReference.child("users").child(userId).child("name").setValue(userName);
-                mDatabaseReference.child("users").child(userId).child("/score/" + key).setValue(score);
+                if (null != score) {
+                    mDatabaseReference.child("users").child(userId).child("score").setValue(score);
+                }
 
-                Map<String, Object> userResponses = new HashMap<>();
-                for (int i = 0; i < responseList.size(); ++i) {
-                    userResponses.put("/users/" + userId + "/response/" + key + i, responseList.get(i));
+                //TODO implement key if needed
+                /*String key = mDatabaseReference.child(userId).push().getKey();*/
+
+                Map<String, Object> userResponses = new TreeMap<>();
+                for (int i = 0; i < 5; ++i) {
+                    if (answerList.get(i).equalsIgnoreCase(responseList.get(i))) {
+                        userResponses.put("/users/" + userId + "/" + quiz + "/response" + i + "/", responseList.get(i));
+                    }
                 }
                 mDatabaseReference.updateChildren(userResponses);
             }
@@ -251,7 +292,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Failed to read value
-                Log.e(TAG, "Failed to read app title value.", databaseError.toException());
+                Log.e(TAG, "Failed to read value.", databaseError.toException());
             }
         });
     }
