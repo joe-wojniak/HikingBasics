@@ -97,12 +97,6 @@ public class QuizActivity extends AppCompatActivity {
             Toast.makeText(this, "User logged in: " + user, Toast.LENGTH_SHORT).show();
         }
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            final String quiz = extras.getString("quiz");
-            quiz(quiz);
-        }
-
         final Button buttonScoreQuiz = findViewById(R.id.buttonScoreQuiz);
         buttonScoreQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,18 +137,18 @@ public class QuizActivity extends AppCompatActivity {
                     mQuestion4.setText(question4);
                     mQuestion5.setText(question5);
 
-                    Object score_temp = dataSnapshot.child("users").child(userId).child("score").getValue();
-                    if (score_temp != null) {
-                        score = Integer.valueOf(String.valueOf(score_temp));
-                        mScore.setText(score.toString());
-                    }
+                        Object score_temp = dataSnapshot.child("users").child(userId).child("score").getValue();
+                        if (score_temp != null) {
+                            score = Integer.valueOf(String.valueOf(score_temp));
+                            mScore.setText(score.toString());
+                        }
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Failed to read value
-                Log.e(TAG, "Failed to read app title value.", databaseError.toException());
+                Log.e(TAG, "Failed to read value.", databaseError.toException());
             }
         });
 
