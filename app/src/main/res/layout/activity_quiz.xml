@@ -25,16 +25,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/marginTop"
-            android:text="@string/avalancheQ1" />
+            android:text="@string/avalancheQ1"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/fragmentA1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="@string/hint"
             android:hint="@string/hint"
             android:inputType="text"
             android:paddingTop="@dimen/paddingTop"
+            android:visibility="gone"
             tools:targetApi="o" />
 
         <TextView
@@ -42,16 +43,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/paddingTop"
-            android:text="@string/avalancheQ2" />
+            android:text="@string/avalancheQ2"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/fragmentA2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="@string/hint"
             android:hint="@string/hint"
             android:inputType="text"
             android:paddingTop="@dimen/paddingTop"
+            android:visibility="gone"
             tools:targetApi="o" />
 
         <TextView
@@ -59,16 +61,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/paddingTop"
-            android:text="@string/avalancheQ3" />
+            android:text="@string/avalancheQ3"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/fragmentA3"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="@string/hint"
             android:hint="@string/hint"
             android:inputType="text"
             android:paddingTop="@dimen/paddingTop"
+            android:visibility="gone"
             tools:targetApi="o" />
 
         <TextView
@@ -76,16 +79,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/paddingTop"
-            android:text="@string/avalancheQ4" />
+            android:text="@string/avalancheQ4"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/fragmentA4"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="@string/hint"
             android:hint="@string/hint"
             android:inputType="text"
             android:paddingTop="@dimen/paddingTop"
+            android:visibility="gone"
             tools:targetApi="o" />
 
         <TextView
@@ -93,16 +97,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/paddingTop"
-            android:text="@string/avalancheQ5" />
+            android:text="@string/avalancheQ5"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/fragmentA5"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="@string/hint"
             android:hint="@string/hint"
             android:inputType="text"
             android:paddingTop="@dimen/paddingTop"
+            android:visibility="gone"
             tools:targetApi="o" />
 
         <TextView

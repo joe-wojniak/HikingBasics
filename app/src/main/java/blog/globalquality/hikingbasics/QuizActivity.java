@@ -125,23 +125,54 @@ public class QuizActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    String question1 = (String) postSnapshot.child(quiz).child("Question1").getValue();
-                    String question2 = (String) postSnapshot.child(quiz).child("Question2").getValue();
-                    String question3 = (String) postSnapshot.child(quiz).child("Question3").getValue();
-                    String question4 = (String) postSnapshot.child(quiz).child("Question4").getValue();
-                    String question5 = (String) postSnapshot.child(quiz).child("Question5").getValue();
+                    ArrayList<Object> questionList = new ArrayList<>();
+                    questionList.add(postSnapshot.child(quiz).child("Question1").getValue());
+                    questionList.add(postSnapshot.child(quiz).child("Question2").getValue());
+                    questionList.add(postSnapshot.child(quiz).child("Question3").getValue());
+                    questionList.add(postSnapshot.child(quiz).child("Question4").getValue());
+                    questionList.add(postSnapshot.child(quiz).child("Question5").getValue());
 
-                    mQuestion1.setText(question1);
-                    mQuestion2.setText(question2);
-                    mQuestion3.setText(question3);
-                    mQuestion4.setText(question4);
-                    mQuestion5.setText(question5);
-
-                        Object score_temp = dataSnapshot.child("users").child(userId).child("score").getValue();
-                        if (score_temp != null) {
-                            score = Integer.valueOf(String.valueOf(score_temp));
-                            mScore.setText(score.toString());
+                    int i = 0;
+                    int max = 4;
+                    while (i < max) {
+                        if (null != questionList.get(i)) {
+                            switch (i) {
+                                case 0:
+                                    mQuestion1.setVisibility(View.VISIBLE);
+                                    mResponse1.setVisibility(View.VISIBLE);
+                                    mQuestion1.setText(questionList.get(i).toString());
+                                    break;
+                                case 1:
+                                    mQuestion2.setVisibility(View.VISIBLE);
+                                    mResponse2.setVisibility(View.VISIBLE);
+                                    mQuestion2.setText(questionList.get(i).toString());
+                                    break;
+                                case 2:
+                                    mQuestion3.setVisibility(View.VISIBLE);
+                                    mResponse3.setVisibility(View.VISIBLE);
+                                    mQuestion3.setText(questionList.get(i).toString());
+                                    break;
+                                case 3:
+                                    mQuestion4.setVisibility(View.VISIBLE);
+                                    mResponse4.setVisibility(View.VISIBLE);
+                                    mQuestion4.setText(questionList.get(i).toString());
+                                    break;
+                                case 4:
+                                    mQuestion5.setVisibility(View.VISIBLE);
+                                    mResponse5.setVisibility(View.VISIBLE);
+                                    mQuestion5.setText(questionList.get(i).toString());
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
+                        i++; // increment counter in the while loop
+                    }
+                    Object score_temp = dataSnapshot.child("users").child(userId).child("score").getValue();
+                    if (score_temp != null) {
+                        score = Integer.valueOf(String.valueOf(score_temp));
+                        mScore.setText(score.toString());
+                    }
                 }
             }
 
@@ -164,28 +195,28 @@ public class QuizActivity extends AppCompatActivity {
             Integer score = 0;
 
             // The correct Answers to Questions
-            String answer1 = null;
-            String answer2 = null;
-            String answer3 = null;
-            String answer4 = null;
-            String answer5 = null;
+            Object answer1 = null;
+            Object answer2 = null;
+            Object answer3 = null;
+            Object answer4 = null;
+            Object answer5 = null;
             // User's Responses to Questions
-            String response1 = null;
-            String response2 = null;
-            String response3 = null;
-            String response4 = null;
-            String response5 = null;
+            Object response1 = null;
+            Object response2 = null;
+            Object response3 = null;
+            Object response4 = null;
+            Object response5 = null;
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                answer1 = (String) dataSnapshot.child("Quiz").child(quiz).child("Answer1").getValue();
-                answer2 = (String) dataSnapshot.child("Quiz").child(quiz).child("Answer2").getValue();
-                answer3 = (String) dataSnapshot.child("Quiz").child(quiz).child("Answer3").getValue();
-                answer4 = (String) dataSnapshot.child("Quiz").child(quiz).child("Answer4").getValue();
-                answer5 = (String) dataSnapshot.child("Quiz").child(quiz).child("Answer5").getValue();
+                answer1 = dataSnapshot.child("Quiz").child(quiz).child("Answer1").getValue();
+                answer2 = dataSnapshot.child("Quiz").child(quiz).child("Answer2").getValue();
+                answer3 = dataSnapshot.child("Quiz").child(quiz).child("Answer3").getValue();
+                answer4 = dataSnapshot.child("Quiz").child(quiz).child("Answer4").getValue();
+                answer5 = dataSnapshot.child("Quiz").child(quiz).child("Answer5").getValue();
 
-                List<String> answerList = new ArrayList<>(Arrays.asList(answer1, answer2, answer3,
+                List<Object> answerList = new ArrayList<>(Arrays.asList(answer1, answer2, answer3,
                         answer4, answer5));
 
                 Object score_temp = dataSnapshot.child("users").child(userId).child("score").getValue();
@@ -194,62 +225,77 @@ public class QuizActivity extends AppCompatActivity {
                     mScore.setText(score.toString());
                 }
 
-                response1 = (String) dataSnapshot.child("users").child(userId).child(quiz).child("response0").getValue();
-                response2 = (String) dataSnapshot.child("users").child(userId).child(quiz).child("response1").getValue();
-                response3 = (String) dataSnapshot.child("users").child(userId).child(quiz).child("response2").getValue();
-                response4 = (String) dataSnapshot.child("users").child(userId).child(quiz).child("response3").getValue();
-                response5 = (String) dataSnapshot.child("users").child(userId).child(quiz).child("response4").getValue();
+                response1 = dataSnapshot.child("users").child(userId).child(quiz).child("response0").getValue();
+                response2 = dataSnapshot.child("users").child(userId).child(quiz).child("response1").getValue();
+                response3 = dataSnapshot.child("users").child(userId).child(quiz).child("response2").getValue();
+                response4 = dataSnapshot.child("users").child(userId).child(quiz).child("response3").getValue();
+                response5 = dataSnapshot.child("users").child(userId).child(quiz).child("response4").getValue();
 
-                List<String> responseList = new ArrayList<>(Arrays.asList(response1, response2, response3,
+                List<Object> responseList = new ArrayList<>(Arrays.asList(response1, response2, response3,
                         response4, response5));
-
                 List<Integer> new_try = new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0));
 
-                for (int i = 0; i < 5; ++i) {
+                for (int i = 0; i < 5; ) {
                     switch (i) {
                         case 0:
                             if (null == responseList.get(i)) {
                                 new_try.add(i, 1);
+                                responseList.remove(i);
                                 responseList.add(i, mResponse1.getText().toString());
                             }
                             break;
                         case 1:
                             if (null == responseList.get(i)) {
                                 new_try.add(i, 1);
+                                responseList.remove(i);
                                 responseList.add(i, mResponse2.getText().toString());
                             }
                             break;
                         case 2:
                             if (null == responseList.get(i)) {
                                 new_try.add(i, 1);
+                                responseList.remove(i);
                                 responseList.add(i, mResponse3.getText().toString());
                             }
                             break;
                         case 3:
                             if (null == responseList.get(i)) {
                                 new_try.add(i, 1);
+                                responseList.remove(i);
                                 responseList.add(i, mResponse4.getText().toString());
                             }
                             break;
                         case 4:
                             if (null == responseList.get(i)) {
                                 new_try.add(i, 1);
+                                responseList.remove(i);
                                 responseList.add(i, mResponse5.getText().toString());
                             }
                             break;
                         default:
                             break;
                     }
+                    i++;
                 }
+// TODO the for loop indexes past the end of the arraylist
+                int max = 0; // max number of answers
 
-                for (int i = 0; i < 5; ++i) {
-                    if (new_try.get(i) == 1) {
-                        if (answerList.get(i).equalsIgnoreCase(responseList.get(i))) {
-                            ++score;
-                            mScore.setText(score.toString()); // update displayed score
-                        }
+                for (int i = 0; i < answerList.size(); ) {
+                    if (null != answerList.get(i)) {
+                        max++;
                     }
                 }
+
+                for (int i = 0; i < max; ) {
+                    if (new_try.get(i) == 1) {
+                        if (responseList.get(i).toString().toLowerCase().contains(answerList.get(i).toString())) {
+                            score++;
+                        }
+                    }
+                    i++; // increment the loop counter
+                }
+
+                mScore.setText(score.toString()); // update displayed score
 
                 String userName = user.getDisplayName();
 
@@ -276,7 +322,7 @@ public class QuizActivity extends AppCompatActivity {
 
                 Map<String, Object> userResponses = new TreeMap<>();
                 for (int i = 0; i < 5; ++i) {
-                    if (answerList.get(i).equalsIgnoreCase(responseList.get(i))) {
+                    if (responseList.get(i).toString().toLowerCase().contains(answerList.get(i).toString())) {
                         userResponses.put("/users/" + userId + "/" + quiz + "/response" + i + "/", responseList.get(i));
                     }
                 }
