@@ -31,13 +31,10 @@
                 android:textAllCaps="true"
                 android:textStyle="bold" />
 
-            <fragment
-                android:id="@+id/item_fragment"
-                android:name="blog.globalquality.hikingbasics.ItemFragment"
+            <ListView
+                android:id="@+id/lvLeaderboard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="16dp" />
+                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/buttonEndQuiz"

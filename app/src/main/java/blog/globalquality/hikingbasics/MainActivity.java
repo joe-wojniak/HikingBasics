@@ -5,25 +5,33 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 import blog.globalquality.hikingbasics.authenticateUser.EmailPasswordActivity;
+import blog.globalquality.hikingbasics.leaderboard.LeaderboardEntry;
+import blog.globalquality.hikingbasics.leaderboard.LeaderboardEntryAdapter;
 import blog.globalquality.hikingbasics.youTube.FragmentDemoActivity;
 import blog.globalquality.hikingbasics.youTube.VideoWallDemoActivity;
-import butterknife.ButterKnife;
 
 
 public class MainActivity extends AppCompatActivity
@@ -31,28 +39,18 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = "MainActivity";
 
+    // Firebase instance variables
+    private FirebaseDatabase mDatabase;
+    private DatabaseReference mDatabaseReference;
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Main Activity
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this); // binds butterknife to MainActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
-        /*setSupportActionBar(toolbar);*/
-        FloatingActionButton fab = findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO replace finish with a useful action
-                Intent i = new Intent(MainActivity.this, EmailPasswordActivity.class);
-                startActivity(i);
-            }
-        });
-
-        /*fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());*/
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -62,6 +60,7 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
 
@@ -69,6 +68,11 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         Log.i(TAG, "onStart");
+
+        // Initialize Firebase components
+        mDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mDatabase.getReference();
+        mAuth = FirebaseAuth.getInstance();
 
         // Start User sign-in activity
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -78,6 +82,59 @@ public class MainActivity extends AppCompatActivity
             Intent i = new Intent(MainActivity.this, EmailPasswordActivity.class);
             startActivity(i);
         }
+
+        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            // Leaderboard variables for name & score
+            Object name1 = null;
+            Object name2 = null;
+            Object name3 = null;
+            Object name4 = null;
+            Object name5 = null;
+
+            Object score1 = null;
+            Object score2 = null;
+            Object score3 = null;
+            Object score4 = null;
+            Object score5 = null;
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    ArrayList<LeaderboardEntry> leaderboardEntries = new ArrayList<>();
+
+                    name1 = postSnapshot.child("leaderboard").child("name0").getValue();
+                    name2 = postSnapshot.child("leaderboard").child("name1").getValue();
+                    name3 = postSnapshot.child("leaderboard").child("name2").getValue();
+                    name4 = postSnapshot.child("leaderboard").child("name3").getValue();
+                    name5 = postSnapshot.child("leaderboard").child("name4").getValue();
+
+                    score1 = postSnapshot.child("leaderboard").child("score1").getValue();
+                    score2 = postSnapshot.child("leaderboard").child("score2").getValue();
+                    score3 = postSnapshot.child("leaderboard").child("score3").getValue();
+                    score4 = postSnapshot.child("leaderboard").child("score4").getValue();
+                    score5 = postSnapshot.child("leaderboard").child("score5").getValue();
+
+                    leaderboardEntries.add(new LeaderboardEntry(name1,score1));
+                    leaderboardEntries.add(new LeaderboardEntry(name2,score2));
+                    leaderboardEntries.add(new LeaderboardEntry(name3,score3));
+                    leaderboardEntries.add(new LeaderboardEntry(name4,score4));
+                    leaderboardEntries.add(new LeaderboardEntry(name5,score5));
+
+                    LeaderboardEntryAdapter entryAdapter = new LeaderboardEntryAdapter(MainActivity.this, leaderboardEntries);
+
+                    ListView listView = findViewById(R.id.lvLeaderboard);
+                    listView.setAdapter(entryAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Failed to read value
+                Log.e(TAG, "Failed to read value.", databaseError.toException());
+            }
+        });
 
     }
 
@@ -106,18 +163,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_settings:
-                return true;
             case R.id.action_sign_out:
                 Intent i = new Intent(MainActivity.this, EmailPasswordActivity.class);
                 startActivity(i);
                 break;
+            default:
+                break;
         }
-        //TODO remove action_settings if statement
-        //noinspection SimplifiableIfStatement
-        /*if (id == R.id.action_settings) {
-            return true;
-        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -203,7 +255,7 @@ public class MainActivity extends AppCompatActivity
         super.onRestart();
         Log.i(TAG, "onRestart");
 
-// End Quiz Activity
+        // End Quiz Activity
         final Button button = findViewById(R.id.buttonEndQuiz);
         Intent j = new Intent(MainActivity.this, EmailPasswordActivity.class);
         button.setOnClickListener(v ->
@@ -215,7 +267,7 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         Log.i(TAG, "onResume");
 
-// End Quiz Activity
+        // End Quiz Activity
         final Button button = findViewById(R.id.buttonEndQuiz);
         Intent j = new Intent(MainActivity.this, EmailPasswordActivity.class);
         button.setOnClickListener(v ->

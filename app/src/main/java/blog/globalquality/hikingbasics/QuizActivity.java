@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,7 +50,6 @@ public class QuizActivity extends AppCompatActivity {
     private FirebaseDatabase mDatabase;
     private DatabaseReference mDatabaseReference;
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,11 +90,6 @@ public class QuizActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (null != user) {
-            Toast.makeText(this, "User logged in: " + user, Toast.LENGTH_SHORT).show();
-        }
-
         final Button buttonScoreQuiz = findViewById(R.id.buttonScoreQuiz);
         buttonScoreQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,17 +105,20 @@ public class QuizActivity extends AppCompatActivity {
 
     public void quiz(String quiz) {
 
-        //TODO populate quiz questions from database
+        //Populate quiz questions from database
 
         FirebaseUser user = mAuth.getCurrentUser();
         String userId = user.getUid();
 
         mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
-            Integer score;
-
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                Object score_temp = dataSnapshot.child("users").child(userId).child("score").getValue();
+                if (score_temp != null) {
+                    mScore.setText(score_temp.toString());
+                }
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     ArrayList<Object> questionList = new ArrayList<>();
@@ -168,11 +164,6 @@ public class QuizActivity extends AppCompatActivity {
                         }
                         i++; // increment counter in the while loop
                     }
-                    Object score_temp = dataSnapshot.child("users").child(userId).child("score").getValue();
-                    if (score_temp != null) {
-                        score = Integer.valueOf(String.valueOf(score_temp));
-                        mScore.setText(score.toString());
-                    }
                 }
             }
 
@@ -186,7 +177,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     public void checkQuiz(String quiz) {
-        // TODO check responses
+        // Check responses
         FirebaseUser user = mAuth.getCurrentUser();
         String userId = user.getUid();
         String userEmail = user.getEmail();
@@ -221,8 +212,8 @@ public class QuizActivity extends AppCompatActivity {
 
                 Object score_temp = dataSnapshot.child("users").child(userId).child("score").getValue();
                 if (score_temp != null) {
-                    score = Integer.valueOf(String.valueOf(score_temp));
-                    mScore.setText(score.toString());
+                    mScore.setText(score_temp.toString());
+                    score = Integer.parseInt(score_temp.toString());
                 }
 
                 response1 = dataSnapshot.child("users").child(userId).child(quiz).child("response0").getValue();
@@ -277,22 +268,23 @@ public class QuizActivity extends AppCompatActivity {
                     }
                     i++;
                 }
-// TODO the for loop indexes past the end of the arraylist
+
                 int max = 0; // max number of answers
 
                 for (int i = 0; i < answerList.size(); ) {
                     if (null != answerList.get(i)) {
                         max++;
                     }
+                    i++;
                 }
 
                 for (int i = 0; i < max; ) {
                     if (new_try.get(i) == 1) {
-                        if (responseList.get(i).toString().toLowerCase().contains(answerList.get(i).toString())) {
+                        if (responseList.get(i).toString().toLowerCase().contains(answerList.get(i).toString().toLowerCase())) {
                             score++;
                         }
                     }
-                    i++; // increment the loop counter
+                    i++;
                 }
 
                 mScore.setText(score.toString()); // update displayed score
@@ -311,20 +303,20 @@ public class QuizActivity extends AppCompatActivity {
 
                 if (null != userName) {
                     mDatabaseReference.child("users").child(userId).child("name").setValue(userName);
+                    mDatabaseReference.child("leaderboard").child("name").setValue(userName);
                 }
 
                 if (null != score) {
                     mDatabaseReference.child("users").child(userId).child("score").setValue(score);
+                    mDatabaseReference.child("leaderboard").child("score").setValue(score);
                 }
 
-                //TODO implement key if needed
-                /*String key = mDatabaseReference.child(userId).push().getKey();*/
-
                 Map<String, Object> userResponses = new TreeMap<>();
-                for (int i = 0; i < 5; ++i) {
-                    if (responseList.get(i).toString().toLowerCase().contains(answerList.get(i).toString())) {
+                for (int i = 0; i < max; ) {
+                    if (responseList.get(i).toString().toLowerCase().contains(answerList.get(i).toString().toLowerCase())) {
                         userResponses.put("/users/" + userId + "/" + quiz + "/response" + i + "/", responseList.get(i));
                     }
+                    i++;
                 }
                 mDatabaseReference.updateChildren(userResponses);
             }

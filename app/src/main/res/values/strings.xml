@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Copyright 2012 Google Inc. All Rights Reserved.
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,9 +29,6 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
     <string name="menu_intro">Who was Steve?</string>
     <string name="menu_avalanche">Avalanche</string>
     <string name="menu_10Essentials">10 Essentials</string>
@@ -41,12 +37,6 @@
     <string name="menu_YouTube">Steve Gladbach Videos</string>
     <string name="menu_YouTubeBestPlaces">YouTube - Best Places</string>
 
-    <string name="videowall_demo_name">Video Wall</string>
-    <string name="fragment_demo_name">Hiking Video</string>
-
-    <string name="playerfragment_text">This is a YouTubePlayerFragment!</string>
-
-    <string name="error_thumbnail_view">There was an error initializing the YouTubeThumbnailView (%1$s)</string>
     <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
 
     <!-- Quiz Titles -->
@@ -63,30 +53,11 @@
     <string name="avalancheQ4">avalancheQ4</string>
     <string name="avalancheQ5">avalancheQ5</string>
 
-    <string name="tenEssentialsQ1">Placeholder</string>
-    <string name="tenEssentialsQ2">Placeholder</string>
-    <string name="tenEssentialsQ3">Placeholder</string>
-    <string name="tenEssentialsQ4">Placeholder</string>
-    <string name="tenEssentialsQ5">Placeholder</string>
-
-    <string name="navigationQ1">Placeholder</string>
-    <string name="navigationQ2">Placeholder</string>
-    <string name="navigationQ3">Placeholder</string>
-    <string name="navigationQ4">Placeholder</string>
-    <string name="navigationQ5">Placeholder</string>
-
-    <string name="leaveNoTraceQ1">Placeholder</string>
-    <string name="leaveNoTraceQ2">Placeholder</string>
-    <string name="leaveNoTraceQ3">Placeholder</string>
-    <string name="leaveNoTraceQ4">Placeholder</string>
-    <string name="leaveNoTraceQ5">Placeholder</string>
-
     <string name="hint">Type your answer here</string>
 
-    <string name="button_score_quiz">Score Quiz</string>
     <string name="button_start_quiz">Start Quiz</string>
+    <string name="button_score_quiz">Score Quiz</string>
     <string name="button_end_quiz">End Quiz</string>
-    <string name="button_close">Close</string>
 
     <string name="user_score_title">Current Score:</string>
 
@@ -96,7 +67,6 @@
     <string name="label_emailpassword">Email/Password Authentication</string>
     <string name="desc_emailpassword">Use an email and password to authenticate with Firebase.</string>
 
-    <string name="hint_user_id">User ID</string>
     <string name="sign_in">Sign In</string>
     <string name="create_account">Create Account</string>
     <string name="sign_out">Sign Out</string>
@@ -107,20 +77,16 @@
     <string name="signed_out">Signed Out</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
-    <string name="desc_firebase_lockup">Firebase logo and name</string>
     <string name="auth_failed">Authentication failed</string>
-
     <string name="status_sign_in_failed">Sign-in failed</string>
-
     <string name="firebase_status_fmt">Firebase User: %s</string>
     <string name="firebase_user_management">Firebase User Management</string>
-
     <string name="emailpassword_status_fmt">Email User: %1$s (verified: %2$b)</string>
-    <string name="emailpassword_title_text">Email and Password</string>
-
+    <string name="emailpassword_title_text">Hiking Basics</string>
     <string name="id_fmt">User ID: %s</string>
     <string name="email_fmt">Email: %s</string>
-
-    <string name="greet_user_message">Hello! Watch the video and the answer the questions. </string>
+    <string name="error_thumbnail_view">Error thumbnail view</string>
+    <string name="fragment_demo_name">Gladbach Memorial Videos</string>
+    <string name="videowall_demo_name">Videowall</string>
 
 </resources>
