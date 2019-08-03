@@ -27,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import blog.globalquality.hikingbasics.Constants.Constants;
 import blog.globalquality.hikingbasics.authenticateUser.EmailPasswordActivity;
 import blog.globalquality.hikingbasics.leaderboard.LeaderboardEntry;
 import blog.globalquality.hikingbasics.leaderboard.LeaderboardEntryAdapter;
@@ -162,47 +163,47 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_intro:
                 Intent i = new Intent(MainActivity.this, FragmentDemoActivity.class);
-                i.putExtra("videoId", "LoidFvJpZ1g");
-                i.putExtra("videoStart", 5000);
-                i.putExtra("quiz", "QuizSG");
+                i.putExtra("videoId", Constants.sg_videoId);
+                i.putExtra("videoStart", Constants.sg_videoStart);
+                i.putExtra("quiz", Constants.quizSG);
                 startActivity(i);
                 break;
             case R.id.nav_avalanche:
                 i = new Intent(MainActivity.this, FragmentDemoActivity.class);
-                i.putExtra("videoId", "QylgHwF3tkk");
-                i.putExtra("videoStart", 12000);
-                i.putExtra("quiz", "QuizAv");
+                i.putExtra("videoId", Constants.av_videoId);
+                i.putExtra("videoStart", Constants.av_videoStart);
+                i.putExtra("quiz", Constants.quizAv);
                 startActivity(i);
                 break;
             case R.id.nav_10Essentials:
                 i = new Intent(MainActivity.this, FragmentDemoActivity.class);
-                i.putExtra("videoId", "tvIH-5B576w");
-                i.putExtra("videoStart", 12000);
-                i.putExtra("quiz", "QuizTenEssentials");
+                i.putExtra("videoId", Constants.TenE_videoId);
+                i.putExtra("videoStart", Constants.TenE_videoStart);
+                i.putExtra("quiz", Constants.quizTenE);
                 startActivity(i);
                 break;
             case R.id.nav_Navigation:
                 i = new Intent(MainActivity.this, FragmentDemoActivity.class);
-                i.putExtra("videoId", "Ba67vHfxqxY");
-                i.putExtra("videoStart", 12000);
-                i.putExtra("quiz", "QuizNav");
+                i.putExtra("videoId", Constants.Nav_videoId);
+                i.putExtra("videoStart", Constants.Nav_videoStart);
+                i.putExtra("quiz", Constants.quizNav);
                 startActivity(i);
                 break;
             case R.id.nav_LNT:
                 i = new Intent(MainActivity.this, FragmentDemoActivity.class);
-                i.putExtra("videoId", "wf77YuQ_1ow");
-                i.putExtra("videoStart", 9000);
-                i.putExtra("quiz", "QuizLeaveNoTrace");
+                i.putExtra("videoId", Constants.LNT_videoId);
+                i.putExtra("videoStart", Constants.LNT_videoStart);
+                i.putExtra("quiz", Constants.quizLNT);
                 startActivity(i);
                 break;
             case R.id.nav_YouTubeWall:
                 i = new Intent(MainActivity.this, VideoWallDemoActivity.class);
-                i.putExtra("playlistID", "PLm-g0Ce0XFfEyR9MEE2maV5oiZyJc1ocE");
+                i.putExtra("playlistID", Constants.sg_playlistID);
                 startActivity(i);
                 break;
             case R.id.nav_YouTubeBestPlaces:
                 i = new Intent(MainActivity.this, VideoWallDemoActivity.class);
-                i.putExtra("playlistID", "PLm-g0Ce0XFfEp7o3VVyakIgwaZSLg8EfF");
+                i.putExtra("playlistID", Constants.bestplaces_playlistID);
                 startActivity(i);
                 break;
             default:
