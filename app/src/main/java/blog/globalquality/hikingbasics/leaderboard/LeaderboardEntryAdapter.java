@@ -41,7 +41,7 @@ public class LeaderboardEntryAdapter extends ArrayAdapter<LeaderboardEntry> {
 
         try {nameTextView.setText(currentLeaderboardEntry.getName().toString());} catch (Exception e) {
             Log.e(TAG, "Name set text .toString error" );
-            nameTextView.setText("No Scores");
+            nameTextView.setText(R.string.no_scores);
         }
 
 
@@ -49,7 +49,7 @@ public class LeaderboardEntryAdapter extends ArrayAdapter<LeaderboardEntry> {
 
         try{numberTextView.setText(currentLeaderboardEntry.getScore().toString());} catch (Exception e) {
             Log.e(TAG, "Score set text .toString error");
-            numberTextView.setText("0");
+            numberTextView.setText(R.string.zero);
         }
 
         return listItemView;

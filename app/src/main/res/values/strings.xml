@@ -85,8 +85,17 @@
     <string name="emailpassword_title_text">Hiking Basics</string>
     <string name="id_fmt">User ID: %s</string>
     <string name="email_fmt">Email: %s</string>
-    <string name="error_thumbnail_view">Error thumbnail view</string>
+    <string name="error_thumbnail_view">There was an error initializing the YouTubeThumbnailView (%1$s)</string>
     <string name="fragment_demo_name">Gladbach Memorial Videos</string>
     <string name="videowall_demo_name">Videowall</string>
+    <string name="user_profile_updated">User profile updated.</string>
+    <string name="create_user_with_email_failure">Unable to create account. Try again later.</string>
+    <string name="verification_email_sent_to">Verification email sent to</string>
+    <string name="failed_to_send_verification_email">Failed to send verification email.</string>
+    <string name="no_scores">No Scores</string>
+    <string name="zero">0</string>
+    <string name="user_logged_in">"User logged in: %1$s"</string>
+    <string name="widget_title">Hiking Basics</string>
+    <string name="widget_refresh">Start</string>
 
 </resources>

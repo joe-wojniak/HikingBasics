@@ -134,8 +134,8 @@ public class EmailPasswordActivity extends AppCompatActivity implements
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EmailPasswordActivity.this, R.string.create_user_with_email_failure,
+                                    Toast.LENGTH_SHORT);
                             updateUI(null);
                         }
 
@@ -191,7 +191,7 @@ public class EmailPasswordActivity extends AppCompatActivity implements
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
+                            Toast.makeText(EmailPasswordActivity.this, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -228,12 +228,12 @@ public class EmailPasswordActivity extends AppCompatActivity implements
 
                         if (task.isSuccessful()) {
                             Toast.makeText(EmailPasswordActivity.this,
-                                    "Verification email sent to " + user.getEmail(),
+                                    R.string.verification_email_sent_to + user.getEmail(),
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             Log.e(TAG, "sendEmailVerification", task.getException());
                             Toast.makeText(EmailPasswordActivity.this,
-                                    "Failed to send verification email.",
+                                    R.string.failed_to_send_verification_email,
                                     Toast.LENGTH_SHORT).show();
                         }
                         // [END_EXCLUDE]

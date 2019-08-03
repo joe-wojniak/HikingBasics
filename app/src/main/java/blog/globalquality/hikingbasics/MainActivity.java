@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity
         // Start User sign-in activity
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (null != user) {
-            Toast.makeText(this, "User logged in: " + user, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.user_logged_in, user), Toast.LENGTH_SHORT).show();
         } else {
             Intent i = new Intent(MainActivity.this, EmailPasswordActivity.class);
             startActivity(i);
