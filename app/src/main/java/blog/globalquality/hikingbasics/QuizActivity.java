@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import blog.globalquality.hikingbasics.leaderboard.LeaderboardEntry;
+
 public class QuizActivity extends AppCompatActivity {
 
     private static final String TAG = "QuizActivity";
@@ -48,7 +50,9 @@ public class QuizActivity extends AppCompatActivity {
 
     // Firebase instance variables
     private FirebaseDatabase mDatabase;
-    private DatabaseReference mDatabaseReference;
+    private DatabaseReference mDatabaseReferenceQuiz;
+    private DatabaseReference mDatabaseReferenceLeaderboard;
+    private DatabaseReference mDatabaseReferenceUsers;
     private FirebaseAuth mAuth;
 
     @Override
@@ -59,7 +63,10 @@ public class QuizActivity extends AppCompatActivity {
 
         // Initialize Firebase components
         mDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mDatabase.getReference();
+        mDatabaseReferenceQuiz = mDatabase.getReference().child("Quiz");
+        mDatabaseReferenceLeaderboard = mDatabase.getReference().child("leaderboard");
+        mDatabaseReferenceUsers = mDatabase.getReference().child("users");
+
         mAuth = FirebaseAuth.getInstance();
 
         // Setup variables to display Questions
@@ -83,6 +90,7 @@ public class QuizActivity extends AppCompatActivity {
         if (extras != null) {
             final String quiz = extras.getString("quiz");
             quiz(quiz);
+            getAnswers(quiz);
         }
     }
 
@@ -110,23 +118,17 @@ public class QuizActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         String userId = user.getUid();
 
-        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabaseReferenceQuiz.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                Object score_temp = dataSnapshot.child("users").child(userId).child("score").getValue();
-                if (score_temp != null) {
-                    mScore.setText(score_temp.toString());
-                }
-
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     ArrayList<Object> questionList = new ArrayList<>();
-                    questionList.add(postSnapshot.child(quiz).child("Question1").getValue());
-                    questionList.add(postSnapshot.child(quiz).child("Question2").getValue());
-                    questionList.add(postSnapshot.child(quiz).child("Question3").getValue());
-                    questionList.add(postSnapshot.child(quiz).child("Question4").getValue());
-                    questionList.add(postSnapshot.child(quiz).child("Question5").getValue());
+                    questionList.add(dataSnapshot.child(quiz).child("Question1").getValue());
+                    questionList.add(dataSnapshot.child(quiz).child("Question2").getValue());
+                    questionList.add(dataSnapshot.child(quiz).child("Question3").getValue());
+                    questionList.add(dataSnapshot.child(quiz).child("Question4").getValue());
+                    questionList.add(dataSnapshot.child(quiz).child("Question5").getValue());
 
                     int i = 0;
                     int max = 4;
@@ -164,7 +166,6 @@ public class QuizActivity extends AppCompatActivity {
                         }
                         i++; // increment counter in the while loop
                     }
-                }
             }
 
             @Override
@@ -177,20 +178,13 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     public void checkQuiz(String quiz) {
-        // Check responses
         FirebaseUser user = mAuth.getCurrentUser();
         String userId = user.getUid();
         String userEmail = user.getEmail();
 
-        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabaseReferenceUsers.addListenerForSingleValueEvent(new ValueEventListener() {
             Integer score = 0;
 
-            // The correct Answers to Questions
-            Object answer1 = null;
-            Object answer2 = null;
-            Object answer3 = null;
-            Object answer4 = null;
-            Object answer5 = null;
             // User's Responses to Questions
             Object response1 = null;
             Object response2 = null;
@@ -198,32 +192,40 @@ public class QuizActivity extends AppCompatActivity {
             Object response4 = null;
             Object response5 = null;
 
+            // Answer's to Questions
+            Object answer1 = null;
+            Object answer2 = null;
+            Object answer3 = null;
+            Object answer4 = null;
+            Object answer5 = null;
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                answer1 = dataSnapshot.child("Quiz").child(quiz).child("Answer1").getValue();
-                answer2 = dataSnapshot.child("Quiz").child(quiz).child("Answer2").getValue();
-                answer3 = dataSnapshot.child("Quiz").child(quiz).child("Answer3").getValue();
-                answer4 = dataSnapshot.child("Quiz").child(quiz).child("Answer4").getValue();
-                answer5 = dataSnapshot.child("Quiz").child(quiz).child("Answer5").getValue();
-
-                List<Object> answerList = new ArrayList<>(Arrays.asList(answer1, answer2, answer3,
-                        answer4, answer5));
-
-                Object score_temp = dataSnapshot.child("users").child(userId).child("score").getValue();
+                Object score_temp = dataSnapshot.child(userId).child("score").getValue();
                 if (score_temp != null) {
                     mScore.setText(score_temp.toString());
                     score = Integer.parseInt(score_temp.toString());
                 }
 
-                response1 = dataSnapshot.child("users").child(userId).child(quiz).child("response0").getValue();
-                response2 = dataSnapshot.child("users").child(userId).child(quiz).child("response1").getValue();
-                response3 = dataSnapshot.child("users").child(userId).child(quiz).child("response2").getValue();
-                response4 = dataSnapshot.child("users").child(userId).child(quiz).child("response3").getValue();
-                response5 = dataSnapshot.child("users").child(userId).child(quiz).child("response4").getValue();
+                response1 = dataSnapshot.child(userId).child(quiz).child("response0").getValue();
+                response2 = dataSnapshot.child(userId).child(quiz).child("response1").getValue();
+                response3 = dataSnapshot.child(userId).child(quiz).child("response2").getValue();
+                response4 = dataSnapshot.child(userId).child(quiz).child("response3").getValue();
+                response5 = dataSnapshot.child(userId).child(quiz).child("response4").getValue();
 
                 List<Object> responseList = new ArrayList<>(Arrays.asList(response1, response2, response3,
                         response4, response5));
+
+                answer1 = dataSnapshot.child(quiz).child("answer0").getValue();
+                answer2 = dataSnapshot.child(quiz).child("answer1").getValue();
+                answer3 = dataSnapshot.child(quiz).child("answer2").getValue();
+                answer4 = dataSnapshot.child(quiz).child("answer3").getValue();
+                answer5 = dataSnapshot.child(quiz).child("answer4").getValue();
+
+                List<Object> answerList = new ArrayList<>(Arrays.asList(answer1, answer2, answer3,
+                        answer4, answer5));
+
                 List<Integer> new_try = new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0));
 
                 for (int i = 0; i < 5; ) {
@@ -302,23 +304,82 @@ public class QuizActivity extends AppCompatActivity {
                 }
 
                 if (null != userName) {
-                    mDatabaseReference.child("users").child(userId).child("name").setValue(userName);
-                    mDatabaseReference.child("leaderboard").child("name").setValue(userName);
+                    mDatabaseReferenceUsers.child(userId).child("name").setValue(userName);
+                    String key = mDatabaseReferenceLeaderboard.push().getKey();
+                    LeaderboardEntry leaderboardEntry = new LeaderboardEntry(key, userName, score);
+                    mDatabaseReferenceLeaderboard.setValue(leaderboardEntry);
                 }
 
                 if (null != score) {
-                    mDatabaseReference.child("users").child(userId).child("score").setValue(score);
-                    mDatabaseReference.child("leaderboard").child("score").setValue(score);
+                    mDatabaseReferenceUsers.child(userId).child("score").setValue(score);
                 }
 
                 Map<String, Object> userResponses = new TreeMap<>();
                 for (int i = 0; i < max; ) {
                     if (responseList.get(i).toString().toLowerCase().contains(answerList.get(i).toString().toLowerCase())) {
-                        userResponses.put("/users/" + userId + "/" + quiz + "/response" + i + "/", responseList.get(i));
+                        userResponses.put( userId + "/" + quiz + "/response" + i + "/", responseList.get(i));
                     }
                     i++;
                 }
-                mDatabaseReference.updateChildren(userResponses);
+                mDatabaseReferenceUsers.updateChildren(userResponses);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Failed to read value
+                Log.e(TAG, "Failed to read value.", databaseError.toException());
+            }
+        });
+
+    }
+
+    public void getAnswers(String quiz) {
+
+        mDatabaseReferenceQuiz.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                // The correct Answers to Questions
+                Object answer1 = null;
+                Object answer2 = null;
+                Object answer3 = null;
+                Object answer4 = null;
+                Object answer5 = null;
+
+                answer1 = dataSnapshot.child(quiz).child("Answer1").getValue();
+                answer2 = dataSnapshot.child(quiz).child("Answer2").getValue();
+                answer3 = dataSnapshot.child(quiz).child("Answer3").getValue();
+                answer4 = dataSnapshot.child(quiz).child("Answer4").getValue();
+                answer5 = dataSnapshot.child(quiz).child("Answer5").getValue();
+
+                // Put answers into a list
+
+                List<Object> answerList = new ArrayList<>();
+
+                answerList.add(answer1);
+                answerList.add(answer2);
+                answerList.add(answer3);
+                answerList.add(answer4);
+                answerList.add(answer5);
+
+                int max = 0; // max number of answers
+
+                for (int i = 0; i < answerList.size(); ) {
+                    if (null != answerList.get(i)) {
+                        max++;
+                    }
+                    i++;
+                }
+
+                // Write answers to users node in database
+
+                Map<String, Object> answerListMap = new TreeMap<>();
+                for (int i = 0; i < 5; ) {
+                    answerListMap.put("/" + quiz + "/answer" + i + "/", answerList.get(i));
+                    i++;
+                }
+                mDatabaseReferenceUsers.updateChildren(answerListMap);
             }
 
             @Override

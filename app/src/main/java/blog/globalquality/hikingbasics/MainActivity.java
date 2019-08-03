@@ -71,8 +71,14 @@ public class MainActivity extends AppCompatActivity
 
         // Initialize Firebase components
         mDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mDatabase.getReference();
+        mDatabaseReference = mDatabase.getReference().child("leaderboard");
         mAuth = FirebaseAuth.getInstance();
+
+        // Initialize leaderboard ListView and its adapter
+        ArrayList<LeaderboardEntry> leaderboardEntries = new ArrayList<>();
+        LeaderboardEntryAdapter entryAdapter = new LeaderboardEntryAdapter(MainActivity.this, leaderboardEntries);
+        ListView listView = findViewById(R.id.lvLeaderboard);
+        listView.setAdapter(entryAdapter);
 
         // Start User sign-in activity
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -83,49 +89,17 @@ public class MainActivity extends AppCompatActivity
             startActivity(i);
         }
 
-        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-
-            // Leaderboard variables for name & score
-            Object name1 = null;
-            Object name2 = null;
-            Object name3 = null;
-            Object name4 = null;
-            Object name5 = null;
-
-            Object score1 = null;
-            Object score2 = null;
-            Object score3 = null;
-            Object score4 = null;
-            Object score5 = null;
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    ArrayList<LeaderboardEntry> leaderboardEntries = new ArrayList<>();
-
-                    name1 = postSnapshot.child("leaderboard").child("name0").getValue();
-                    name2 = postSnapshot.child("leaderboard").child("name1").getValue();
-                    name3 = postSnapshot.child("leaderboard").child("name2").getValue();
-                    name4 = postSnapshot.child("leaderboard").child("name3").getValue();
-                    name5 = postSnapshot.child("leaderboard").child("name4").getValue();
-
-                    score1 = postSnapshot.child("leaderboard").child("score1").getValue();
-                    score2 = postSnapshot.child("leaderboard").child("score2").getValue();
-                    score3 = postSnapshot.child("leaderboard").child("score3").getValue();
-                    score4 = postSnapshot.child("leaderboard").child("score4").getValue();
-                    score5 = postSnapshot.child("leaderboard").child("score5").getValue();
-
-                    leaderboardEntries.add(new LeaderboardEntry(name1,score1));
-                    leaderboardEntries.add(new LeaderboardEntry(name2,score2));
-                    leaderboardEntries.add(new LeaderboardEntry(name3,score3));
-                    leaderboardEntries.add(new LeaderboardEntry(name4,score4));
-                    leaderboardEntries.add(new LeaderboardEntry(name5,score5));
-
-                    LeaderboardEntryAdapter entryAdapter = new LeaderboardEntryAdapter(MainActivity.this, leaderboardEntries);
-
-                    ListView listView = findViewById(R.id.lvLeaderboard);
-                    listView.setAdapter(entryAdapter);
+                    Object key = postSnapshot.child("key").getValue();
+                    Object name = postSnapshot.child("name").getValue();
+                    Object score = postSnapshot.child("score").getValue();
+                    LeaderboardEntry leaderboardEntry = new LeaderboardEntry(key, name, score);
+                    entryAdapter.add(leaderboardEntry);
                 }
             }
 
