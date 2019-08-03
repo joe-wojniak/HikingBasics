@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            storeFile file('C:\\Users\\joewo\\StudioProjects\\keystore2019.jks')
+            storePassword storePassword
+            keyAlias = 'key0'
+            keyPassword keyPassword
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "blog.globalquality.hikingbasics"
@@ -18,6 +26,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField 'String', "YouTubeKey", google_key
+            signingConfig signingConfigs.config
         }
     }
     compileOptions {
