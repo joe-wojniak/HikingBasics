@@ -94,14 +94,8 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Object key = postSnapshot.child("key").getValue();
-                    Object name = postSnapshot.child("name").getValue();
-                    Object score = postSnapshot.child("score").getValue();
-                    LeaderboardEntry leaderboardEntry = new LeaderboardEntry(key, name, score);
-                    entryAdapter.add(leaderboardEntry);
-                }
+                LeaderboardEntry leaderboardEntry = dataSnapshot.child("leaderboard").getValue(LeaderboardEntry.class);
+                entryAdapter.add(leaderboardEntry);
             }
 
             @Override

@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:src="@mipmap/avvy"/>
+        android:contentDescription="TODO" android:src="@mipmap/avvy"/>
 
     <TextView
         android:id="@+id/textView"

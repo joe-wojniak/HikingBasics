@@ -61,11 +61,7 @@ public class VideoWallDemoActivity extends AppCompatActivity implements
   private static final float PLAYER_VIEW_MINIMUM_HEIGHT_DP = 110;
   private static final int MAX_NUMBER_OF_ROWS_WANTED = 4;
 
-  // TODO remove comments
-  // Playlist from which videos are displayed on the video wall
-  // private static final String PLAYLIST_ID = "ECAE6B03CA849AD332";
   private String PLAYLIST_ID;
-  // Replace with extra from intent from navigation drawer selection
 
   private static final int INTER_IMAGE_PADDING_DP = 5;
 
@@ -208,6 +204,7 @@ public class VideoWallDemoActivity extends AppCompatActivity implements
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
     if (requestCode == RECOVERY_DIALOG_REQUEST) {
       // Retry initialization if user performed a recovery action
       if (errorDialog != null && errorDialog.isShowing()) {

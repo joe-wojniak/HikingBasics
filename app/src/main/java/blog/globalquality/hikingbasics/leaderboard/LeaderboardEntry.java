@@ -7,28 +7,22 @@ package blog.globalquality.hikingbasics.leaderboard;
 
 public class LeaderboardEntry {
 
-    private Object mKey;
-    private Object mLeaderName;
-    private Object mLeaderScore;
+    public String mLeaderName;
+    public Integer mLeaderScore;
 
     public LeaderboardEntry() {
     }
 
-    public LeaderboardEntry(Object key, Object name, Object score) {
-        mKey = key;
+    public LeaderboardEntry(String name, Integer score) {
         mLeaderName = name;
         mLeaderScore = score;
     }
 
-    public Object getKey() {
-        return mKey;
-    }
-
-    public Object getName() {
+    public String getName() {
         return mLeaderName;
     }
 
-    public Object getScore() {
+    public Integer getScore() {
         return mLeaderScore;
     }
 

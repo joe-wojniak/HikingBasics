@@ -134,7 +134,7 @@ public class ImageWallView extends ViewGroup {
   public void setImageDrawable(int col, int row, Drawable drawable) {
     int elementIdx = getElementIdx(col, row);
     // manually boxing elementIdx to avoid calling List.remove(int position) method overload
-    unInitializedImages.remove(new Integer(elementIdx));
+    unInitializedImages.remove(Integer.valueOf(elementIdx));
     images[elementIdx].setImageDrawable(drawable);
   }
 

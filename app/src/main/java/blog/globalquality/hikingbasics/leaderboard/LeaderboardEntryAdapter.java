@@ -39,17 +39,29 @@ public class LeaderboardEntryAdapter extends ArrayAdapter<LeaderboardEntry> {
 
         TextView nameTextView = listItemView.findViewById(R.id.tvLeaderboardName);
 
-        try {nameTextView.setText(currentLeaderboardEntry.getName().toString());} catch (Exception e) {
-            Log.e(TAG, "Name set text .toString error" );
+        //Update Leaderboard Name
+        String currentLeaderBoardName = null;
+        try {
+            currentLeaderBoardName = currentLeaderboardEntry.getName();
+        } catch (Exception e) {
+            Log.e(TAG, "Name set text null value error");
             nameTextView.setText(R.string.no_scores);
         }
+        if (null != currentLeaderBoardName) {
+            nameTextView.setText(currentLeaderBoardName);
+        }
 
-
+        //Update Leaderboard Score
         TextView numberTextView = listItemView.findViewById(R.id.tvLeaderboardScore);
-
-        try{numberTextView.setText(currentLeaderboardEntry.getScore().toString());} catch (Exception e) {
-            Log.e(TAG, "Score set text .toString error");
+        String currentLeaderBoardScore = null;
+        try {
+            numberTextView.setText(currentLeaderBoardScore = currentLeaderboardEntry.getScore().toString());
+        } catch (Exception e) {
+            Log.e(TAG, "Score set text null value error");
             numberTextView.setText(R.string.zero);
+        }
+        if (null != currentLeaderBoardScore) {
+            numberTextView.setText(currentLeaderBoardScore);
         }
 
         return listItemView;

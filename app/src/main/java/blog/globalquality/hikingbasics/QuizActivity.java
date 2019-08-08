@@ -123,49 +123,49 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    ArrayList<Object> questionList = new ArrayList<>();
-                    questionList.add(dataSnapshot.child(quiz).child("Question1").getValue());
-                    questionList.add(dataSnapshot.child(quiz).child("Question2").getValue());
-                    questionList.add(dataSnapshot.child(quiz).child("Question3").getValue());
-                    questionList.add(dataSnapshot.child(quiz).child("Question4").getValue());
-                    questionList.add(dataSnapshot.child(quiz).child("Question5").getValue());
+                ArrayList<Object> questionList = new ArrayList<>();
+                questionList.add(dataSnapshot.child(quiz).child("Question1").getValue());
+                questionList.add(dataSnapshot.child(quiz).child("Question2").getValue());
+                questionList.add(dataSnapshot.child(quiz).child("Question3").getValue());
+                questionList.add(dataSnapshot.child(quiz).child("Question4").getValue());
+                questionList.add(dataSnapshot.child(quiz).child("Question5").getValue());
 
-                    int i = 0;
-                    int max = 4;
-                    while (i < max) {
-                        if (null != questionList.get(i)) {
-                            switch (i) {
-                                case 0:
-                                    mQuestion1.setVisibility(View.VISIBLE);
-                                    mResponse1.setVisibility(View.VISIBLE);
-                                    mQuestion1.setText(questionList.get(i).toString());
-                                    break;
-                                case 1:
-                                    mQuestion2.setVisibility(View.VISIBLE);
-                                    mResponse2.setVisibility(View.VISIBLE);
-                                    mQuestion2.setText(questionList.get(i).toString());
-                                    break;
-                                case 2:
-                                    mQuestion3.setVisibility(View.VISIBLE);
-                                    mResponse3.setVisibility(View.VISIBLE);
-                                    mQuestion3.setText(questionList.get(i).toString());
-                                    break;
-                                case 3:
-                                    mQuestion4.setVisibility(View.VISIBLE);
-                                    mResponse4.setVisibility(View.VISIBLE);
-                                    mQuestion4.setText(questionList.get(i).toString());
-                                    break;
-                                case 4:
-                                    mQuestion5.setVisibility(View.VISIBLE);
-                                    mResponse5.setVisibility(View.VISIBLE);
-                                    mQuestion5.setText(questionList.get(i).toString());
-                                    break;
-                                default:
-                                    break;
-                            }
+                int i = 0;
+                int max = 4;
+                while (i < max) {
+                    if (null != questionList.get(i)) {
+                        switch (i) {
+                            case 0:
+                                mQuestion1.setVisibility(View.VISIBLE);
+                                mResponse1.setVisibility(View.VISIBLE);
+                                mQuestion1.setText(questionList.get(i).toString());
+                                break;
+                            case 1:
+                                mQuestion2.setVisibility(View.VISIBLE);
+                                mResponse2.setVisibility(View.VISIBLE);
+                                mQuestion2.setText(questionList.get(i).toString());
+                                break;
+                            case 2:
+                                mQuestion3.setVisibility(View.VISIBLE);
+                                mResponse3.setVisibility(View.VISIBLE);
+                                mQuestion3.setText(questionList.get(i).toString());
+                                break;
+                            case 3:
+                                mQuestion4.setVisibility(View.VISIBLE);
+                                mResponse4.setVisibility(View.VISIBLE);
+                                mQuestion4.setText(questionList.get(i).toString());
+                                break;
+                            case 4:
+                                mQuestion5.setVisibility(View.VISIBLE);
+                                mResponse5.setVisibility(View.VISIBLE);
+                                mQuestion5.setText(questionList.get(i).toString());
+                                break;
+                            default:
+                                break;
                         }
-                        i++; // increment counter in the while loop
                     }
+                    i++; // increment counter in the while loop
+                }
             }
 
             @Override
@@ -202,10 +202,20 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                Object score_temp = dataSnapshot.child(userId).child("score").getValue();
-                if (score_temp != null) {
-                    mScore.setText(score_temp.toString());
-                    score = Integer.parseInt(score_temp.toString());
+                LeaderboardEntry leaderboardEntry = dataSnapshot.child(userId).getValue(LeaderboardEntry.class);
+
+                try {mUserScoreTitle.setText(leaderboardEntry.getName());
+
+                } catch (Exception e){
+                    Log.e(TAG, "User Score title set text null value error");
+                    mUserScoreTitle.setText(R.string.user_score_title);
+                }
+
+                try {mScore.setText(Integer.toString(leaderboardEntry.getScore()));
+
+                } catch (Exception e){
+                    Log.e(TAG, "User Score set text null value error");
+                    mScore.setText(R.string.no_scores);
                 }
 
                 response1 = dataSnapshot.child(userId).child(quiz).child("response0").getValue();
@@ -296,7 +306,11 @@ public class QuizActivity extends AppCompatActivity {
                 if (null == userName) {
                     // [Make userName if DisplayName doesn't exist]
                     if (null != userEmail) {
-                        int index = userEmail.indexOf("@");
+                        int index = userEmail.indexOf(".");
+                        if (index != -1) {
+                            userName = userEmail.substring(0, index);
+                        }
+                        index = userEmail.indexOf("@");
                         if (index != -1) {
                             userName = userEmail.substring(0, index);
                         }
@@ -305,9 +319,8 @@ public class QuizActivity extends AppCompatActivity {
 
                 if (null != userName) {
                     mDatabaseReferenceUsers.child(userId).child("name").setValue(userName);
-                    String key = mDatabaseReferenceLeaderboard.push().getKey();
-                    LeaderboardEntry leaderboardEntry = new LeaderboardEntry(key, userName, score);
-                    mDatabaseReferenceLeaderboard.setValue(leaderboardEntry);
+                    leaderboardEntry = new LeaderboardEntry(userName, score);
+                    mDatabaseReferenceLeaderboard.push().setValue(leaderboardEntry);
                 }
 
                 if (null != score) {
@@ -317,7 +330,7 @@ public class QuizActivity extends AppCompatActivity {
                 Map<String, Object> userResponses = new TreeMap<>();
                 for (int i = 0; i < max; ) {
                     if (responseList.get(i).toString().toLowerCase().contains(answerList.get(i).toString().toLowerCase())) {
-                        userResponses.put( userId + "/" + quiz + "/response" + i + "/", responseList.get(i));
+                        userResponses.put(userId + "/" + quiz + "/response" + i + "/", responseList.get(i));
                     }
                     i++;
                 }

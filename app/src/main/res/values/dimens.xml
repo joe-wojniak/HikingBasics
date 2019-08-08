@@ -8,7 +8,7 @@
     <dimen name="minWidth">200dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="marginTop">32dp</dimen>
-    <dimen name="marginLeft">32dp</dimen>
+    <dimen name="marginStart">32dp</dimen>
     <dimen name="paddingTop">16dp</dimen>
     <dimen name="paddingBottom">16dp</dimen>
     <dimen name="layoutSize">375dp</dimen>
